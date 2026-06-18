@@ -3,33 +3,44 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>우리집 방과 후</title>
+<title>After-School</title>
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-title" content="방과후" />
+<meta name="apple-mobile-web-app-title" content="After-School" />
 <meta name="theme-color" content="#2E6F5E" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232E6F5E'/%3E%3Ccircle cx='50' cy='50' r='17' fill='none' stroke='white' stroke-width='8'/%3E%3Cpath d='M50 17v9M50 74v9M17 50h9M74 50h9' stroke='white' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E" />
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Jua&family=Gothic+A1:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Gothic+A1:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Kosugi+Maru&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;500;700&display=swap');
 * { box-sizing: border-box; }
 html, body { margin:0; padding:0; }
 .as-root {
   --paper:#F4F6F3; --card:#FFFFFF; --ink:#20302A; --muted:#6B7A72;
   --line:#E4E8E2; --primary:#2E6F5E; --primary-soft:#E7F1ED;
-  font-family:'Gothic A1', system-ui, sans-serif;
+  --font-body:'Nunito', system-ui, sans-serif; --font-disp:'Fredoka', system-ui, sans-serif;
+  font-family:var(--font-body);
   color:var(--ink); background:var(--paper);
   min-height:100vh; -webkit-font-smoothing:antialiased;
 }
+.as-root.lang-en { --font-body:'Nunito', system-ui, sans-serif; --font-disp:'Fredoka', system-ui, sans-serif; }
+.as-root.lang-ko { --font-body:'Gothic A1', system-ui, sans-serif; --font-disp:'Jua', system-ui, sans-serif; }
+.as-root.lang-ja { --font-body:'Kosugi Maru', system-ui, sans-serif; --font-disp:'Kosugi Maru', system-ui, sans-serif; }
+.as-root.lang-zh { --font-body:'Noto Sans SC', system-ui, sans-serif; --font-disp:'ZCOOL KuaiLe', system-ui, sans-serif; }
 .as-wrap { max-width:760px; margin:0 auto; padding:max(20px, env(safe-area-inset-top)) 16px 120px; }
-.as-disp { font-family:'Jua', system-ui, sans-serif; font-weight:400; }
+.as-disp { font-family:var(--font-disp); font-weight:400; }
 .as-head { margin:6px 2px 18px; }
 .as-eyebrow { color:var(--muted); font-size:13px; font-weight:600; letter-spacing:.02em; }
-.as-today { font-size:34px; line-height:1.1; margin-top:2px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+.as-today { font-size:clamp(23px, 6.4vw, 31px); line-height:1.14; margin-top:2px; display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; }
 .as-today .dow { color:var(--primary); }
 .as-card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px 16px 14px; margin-bottom:14px; }
 .as-kidrow { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
 .as-dot { width:14px; height:14px; border-radius:50%; flex:none; }
-.as-kidname { font-family:'Jua', sans-serif; font-size:19px; }
+.as-kidname { font-family:var(--font-disp); font-size:19px; }
 .as-spacer { flex:1; }
+.as-avatar-wrap { position:relative; flex:none; }
+.as-avatar { width:64px; height:64px; border-radius:50%; border:2px solid var(--line); background:var(--primary-soft); cursor:pointer; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:0; }
+.as-avatar:hover { border-color:var(--primary); }
+.as-avatar img { width:100%; height:100%; object-fit:cover; }
+.as-avatar .ph { color:var(--primary); display:flex; }
+.as-avatar-rm { position:absolute; top:-5px; right:-5px; width:19px; height:19px; border-radius:50%; background:#20302A; color:#fff; display:flex; align-items:center; justify-content:center; border:2px solid #fff; cursor:pointer; padding:0; }
 .as-ring-wrap { display:flex; align-items:center; gap:6px; color:var(--muted); font-size:12.5px; font-weight:600; }
 .as-ring { transform:rotate(-90deg); }
 .as-ring .bg { stroke:var(--line); }
@@ -38,15 +49,18 @@ html, body { margin:0; padding:0; }
 .as-acts { display:flex; flex-wrap:wrap; gap:6px; margin:2px 0 12px; }
 .as-act { display:inline-flex; align-items:center; gap:6px; padding:5px 11px; border-radius:999px; font-size:13px; font-weight:600; }
 .as-act .t { font-variant-numeric:tabular-nums; opacity:.85; }
-.as-empty { color:var(--muted); font-size:13px; padding:4px 2px 12px; }
+.as-empty { color:var(--muted); font-size:13px; padding:4px 2px 10px; }
 .as-divider { height:1px; background:var(--line); margin:4px 0 12px; }
 .as-sub { font-size:12px; font-weight:700; color:var(--muted); letter-spacing:.03em; margin-bottom:8px; }
+.as-rowhd { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
 .as-task { display:flex; align-items:center; gap:11px; padding:9px 4px; cursor:pointer; user-select:none; border-radius:10px; }
 .as-task:hover { background:#fafbfa; }
 .as-box { width:24px; height:24px; border-radius:8px; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; flex:none; transition:all .15s ease; }
 .as-task.on .as-box { border-color:var(--primary); background:var(--primary); }
 .as-task.on .as-label { color:var(--muted); text-decoration:line-through; }
 .as-label { font-size:15.5px; }
+.as-oneoff-x { display:flex; color:var(--muted); cursor:pointer; padding:3px; border-radius:6px; }
+.as-oneoff-x:hover { color:#c0392b; }
 .as-celebrate { margin-top:6px; color:var(--primary); font-weight:700; font-size:14px; }
 .as-tabbar { position:fixed; left:0; right:0; bottom:0; background:rgba(255,255,255,.92);
   backdrop-filter:blur(8px); border-top:1px solid var(--line); display:flex; justify-content:center; gap:6px;
@@ -54,34 +68,84 @@ html, body { margin:0; padding:0; }
 .as-tab { flex:1; max-width:160px; display:flex; flex-direction:column; align-items:center; gap:3px;
   padding:8px 4px; border:none; background:none; color:var(--muted); font-family:inherit; font-size:11.5px; font-weight:700; cursor:pointer; border-radius:12px; }
 .as-tab.active { color:var(--primary); background:var(--primary-soft); }
+.as-seg { display:inline-flex; background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:2px; gap:2px; flex:none; }
+.as-seg-btn { font-family:inherit; font-size:12.5px; font-weight:700; color:var(--muted); background:none; border:none; border-radius:8px; padding:6px 12px; cursor:pointer; }
+.as-seg-btn.on { background:#fff; color:var(--primary); box-shadow:0 1px 2px rgba(0,0,0,.06); }
 .as-grid-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:0 -16px; padding:0 16px; }
-.as-grid { border-collapse:separate; border-spacing:0; width:100%; min-width:540px; }
+.as-grid { border-collapse:separate; border-spacing:0; width:100%; min-width:560px; }
 .as-grid th, .as-grid td { border-bottom:1px solid var(--line); padding:8px 6px; vertical-align:top; }
 .as-grid th { font-size:12.5px; color:var(--muted); font-weight:700; text-align:center; }
 .as-grid th.namecol, .as-grid td.namecol { text-align:left; width:78px; position:sticky; left:0; background:var(--paper); }
-.as-grid td.today-col { background:var(--primary-soft); }
+.as-grid td.today-col, .as-grid th.today-col { background:var(--primary-soft); }
 .as-cell { display:flex; flex-direction:column; gap:5px; min-height:34px; }
+.as-daylist { display:flex; flex-direction:column; gap:10px; }
+.as-daycard { border:1px solid var(--line); border-radius:14px; padding:10px 12px; }
+.as-daycard.today { border-color:var(--primary); background:var(--primary-soft); }
+.as-dayhd { font-family:var(--font-disp); font-size:15px; margin-bottom:6px; display:flex; align-items:center; gap:7px; }
+.as-dayhd .dt { font-family:var(--font-body); font-size:12px; font-weight:700; color:var(--muted); }
+.as-dayhd .tag { font-family:var(--font-body); font-size:11px; font-weight:700; color:#fff; background:var(--primary); border-radius:6px; padding:1px 7px; }
+.as-daykid { display:flex; align-items:flex-start; gap:8px; padding:5px 0; }
+.as-dayname { font-size:13.5px; font-weight:700; min-width:56px; padding-top:3px; }
+.as-daychips { display:flex; flex-wrap:wrap; gap:5px; align-items:center; flex:1; }
 .as-chip { display:inline-flex; align-items:center; gap:5px; padding:4px 8px; border-radius:9px; font-size:12px; font-weight:600; }
-.as-chip .x { cursor:pointer; opacity:.55; display:flex; }
-.as-chip .x:hover { opacity:1; }
 .as-addcell { border:1px dashed var(--line); background:none; border-radius:8px; color:var(--muted); cursor:pointer; padding:3px; display:flex; align-items:center; justify-content:center; }
 .as-addcell:hover { color:var(--primary); border-color:var(--primary); }
+.as-clsgrid { display:grid; grid-template-columns:1fr; gap:10px; margin-top:4px; }
+@media (min-width:520px){ .as-clsgrid { grid-template-columns:1fr 1fr; } }
+.as-clscard { border:1px solid var(--line); border-radius:14px; padding:12px 13px; cursor:pointer; transition:border-color .15s; }
+.as-clscard:hover { border-color:var(--primary); }
+.as-clshd { display:flex; align-items:center; gap:7px; margin-bottom:8px; }
+.as-clsdots { display:inline-flex; gap:3px; flex:none; }
+.as-clsname { font-family:var(--font-disp); font-size:15.5px; }
+.as-clskid { font-size:11px; font-weight:700; color:var(--muted); background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:1px 6px; }
+.as-clsedit { color:var(--muted); display:flex; }
+.as-clsrow { display:flex; align-items:flex-start; gap:7px; font-size:13px; padding:3px 0; }
+.as-clsrow .ico { color:var(--muted); margin-top:1px; flex:none; }
+.as-clsrow .lab { color:var(--muted); min-width:54px; flex:none; }
+.as-clsrow .val { word-break:break-word; }
+.as-maplink { color:var(--primary); font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:3px; margin-left:6px; white-space:nowrap; }
+.as-maplink:hover { text-decoration:underline; }
+.as-clsmemo { margin-top:8px; padding-top:8px; border-top:1px dashed var(--line); font-size:12.5px; color:var(--muted); white-space:pre-wrap; line-height:1.55; }
+.as-clsempty { color:var(--muted); font-size:13px; padding:8px 2px; line-height:1.5; }
 .as-input { font-family:inherit; font-size:14.5px; padding:9px 11px; border:1px solid var(--line); border-radius:11px; background:#fff; color:var(--ink); width:100%; }
 .as-input:focus { outline:2px solid var(--primary-soft); border-color:var(--primary); }
 .as-btn { font-family:inherit; font-weight:700; font-size:14px; padding:9px 14px; border-radius:12px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:6px; }
 .as-btn.primary { background:var(--primary); color:#fff; }
 .as-btn.ghost { background:#fff; border:1px solid var(--line); color:var(--ink); }
 .as-iconbtn { border:none; background:none; cursor:pointer; color:var(--muted); padding:6px; border-radius:8px; display:flex; }
-.as-iconbtn:hover { color:#c0392b; background:#fdecea; }
-.as-swatches { display:flex; gap:7px; }
-.as-sw { width:22px; height:22px; border-radius:50%; cursor:pointer; border:2px solid transparent; }
+.as-iconbtn.danger:hover { color:#c0392b; background:#fdecea; }
+.as-iconbtn:hover { color:var(--primary); background:var(--primary-soft); }
+.as-swatches { display:flex; gap:8px; flex-wrap:wrap; }
+.as-sw { width:26px; height:26px; border-radius:50%; cursor:pointer; border:2px solid transparent; }
 .as-sw.sel { border-color:var(--ink); }
 .as-row { display:flex; gap:8px; align-items:center; }
 .as-addbar { display:flex; gap:8px; margin-top:8px; }
+.as-pills { display:flex; gap:5px; flex-wrap:wrap; align-items:center; margin:9px 0 2px; }
+.as-pill { display:inline-flex; align-items:center; justify-content:center; min-width:28px; height:28px; padding:0 9px; border-radius:8px; border:1px solid var(--line); font-size:12px; font-weight:700; color:var(--muted); cursor:pointer; background:#fff; user-select:none; }
+.as-pill.on { background:var(--primary); border-color:var(--primary); color:#fff; }
+.as-preset { font-size:11.5px; font-weight:700; color:var(--primary); background:var(--primary-soft); border:none; border-radius:8px; padding:6px 9px; cursor:pointer; font-family:inherit; }
+.as-langgrid { display:flex; flex-wrap:wrap; gap:7px; }
+.as-langbtn { font-family:inherit; font-size:13px; font-weight:700; color:var(--muted); background:#fff; border:1px solid var(--line); border-radius:10px; padding:8px 14px; cursor:pointer; }
+.as-langbtn.on { background:var(--primary); border-color:var(--primary); color:#fff; }
+.as-arrowbtn { border:1px solid var(--line); background:#fff; border-radius:8px; width:26px; height:26px; cursor:pointer; color:var(--ink); display:inline-flex; align-items:center; justify-content:center; padding:0; }
+.as-arrowbtn:hover { border-color:var(--primary); color:var(--primary); }
+.as-detail-row { display:flex; align-items:center; gap:9px; font-size:14px; padding:6px 0; }
+.as-detail-row .ico { color:var(--muted); flex:none; display:flex; }
+.as-detail-row .v { font-weight:600; }
+.cal-nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.cal-month { font-family:var(--font-disp); font-size:17px; }
+.cal-navbtn { border:1px solid var(--line); background:#fff; border-radius:9px; width:34px; height:34px; cursor:pointer; color:var(--ink); display:flex; align-items:center; justify-content:center; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.cal-h { text-align:center; font-size:11px; font-weight:700; color:var(--muted); padding:2px 0 4px; }
+.cal-c { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:9px; font-size:13px; font-weight:700; cursor:pointer; color:var(--ink); border:1.5px solid transparent; }
+.cal-c.empty { cursor:default; }
+.cal-c.today { border-color:var(--primary); }
+.cal-c.sel { outline:2px solid var(--primary); outline-offset:-1px; }
+.cal-mini .cal-c { cursor:default; font-size:11.5px; border-radius:7px; }
 button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary); outline-offset:2px; }
 .as-pop { position:fixed; inset:0; background:rgba(20,30,25,.35); display:flex; align-items:center; justify-content:center; z-index:40; padding:18px; }
-.as-popcard { background:#fff; border-radius:18px; padding:18px; width:100%; max-width:340px; }
-.as-poptitle { font-family:'Jua', sans-serif; font-size:18px; margin-bottom:14px; }
+.as-popcard { background:#fff; border-radius:18px; padding:18px; width:100%; max-width:360px; max-height:88vh; overflow-y:auto; }
+.as-poptitle { font-family:var(--font-disp); font-size:18px; margin-bottom:14px; }
 </style>
 </head>
 <body>
@@ -92,281 +156,564 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
 
   var KEY = "afterschool_v1";
   var PALETTE = ["#F2A65A", "#6FA86B", "#5B8DB8", "#C56A8A", "#8B7BB5", "#4FA89B"];
-  var DOW = ["일", "월", "화", "수", "목", "금", "토"];
   var DAYS = [1, 2, 3, 4, 5, 6, 0];
+  var ALL = [0, 1, 2, 3, 4, 5, 6];
+  var LANGS = ["en", "ko", "zh", "ja"];
+  var EN_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var THEMES = {
+    forest:{p:"#2E6F5E",s:"#E7F1ED",bg:"#F4F6F3"},
+    sky:{p:"#3A78B5",s:"#E7EFF7",bg:"#F1F6FB"},
+    teal:{p:"#2E8C82",s:"#E1F2EF",bg:"#EFF8F6"},
+    grape:{p:"#6E5AA6",s:"#ECE8F7",bg:"#F6F4FB"},
+    berry:{p:"#C2557B",s:"#F8E7EE",bg:"#FBF3F7"},
+    coral:{p:"#D2694F",s:"#FBE8E2",bg:"#FCF4F0"},
+    apricot:{p:"#C07A33",s:"#F7ECDC",bg:"#FBF6EC"},
+    honey:{p:"#B5912B",s:"#F6EFD6",bg:"#FBF7EA"},
+    slate:{p:"#4F5D9E",s:"#E8EAF6",bg:"#F4F5FB"},
+    rose:{p:"#B56C8D",s:"#F4E8F0",bg:"#FAF4F8"}
+  };
+  var THEME_ORDER = ["forest","sky","teal","grape","berry","coral","apricot","honey","slate","rose"];
+
+  var T = {
+    en: { dows:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], dowl:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      app_title:"After-School", tab_today:"Today", tab_week:"Schedule", tab_edit:"Edit",
+      no_activities:"No classes today 🌿", routines:"Routines", no_routines_today:"No routines for today.", today_todo:"To-do",
+      add_oneoff_ph:"Add today's task (e.g. return library book)", all_done:"All done! 🎉",
+      week_title:"Weekly Schedule", seg_table:"Table", seg_byday:"By day", add_hint:"Tap + to add a class", add_kid_first:"Add a child first.", today_tag:"Today",
+      classinfo_title:"Class info", classinfo_sub:"(place · shuttle · supplies)", add:"Add",
+      no_classes:"No class info yet.<br>Add place, shuttle and supplies to gather them here.",
+      loc:"Place", shuttle:"Shuttle", supplies:"Supplies", yes:"Yes", no:"No", map:"Map",
+      cls_title:"Class info", cls_name_ph:"Class name (e.g. Swimming)", cls_who:"Whose class?", cls_who_multi:"(select one or more)",
+      cls_loc_ph:"Place (free text — e.g. ○○ Center 2F)", cls_map_ph:"Map link or address (optional)", cls_shuttle:"Shuttle bus",
+      cls_supplies_ph:"Supplies (e.g. swimsuit, goggles)", cls_memo:"Memo", cls_opt:"(optional)", cls_memo_ph:"e.g. shuttle at gate 3:20, payment on the 5th",
+      no_kid_first:"Add a child first", del:"Delete", cancel:"Cancel", save:"Save",
+      routine_section:"Routines · pick repeat days", routine_add_ph:"Add a routine (e.g. Homework)", every:"Daily", weekday:"Weekdays",
+      kid_add:"Add child", new_kid:"New child", color:"Color",
+      act_new:"Add class", act_edit:"Edit class", act_label_ph:"e.g. Swimming, Piano", repeat:"Repeat", start_t:"Start", end_t:"End", edit_btn:"Edit",
+      act_from_note:"Applies from this week on. Earlier weeks stay unchanged.",
+      scope_label:"Apply to", scope_one:"This week only", scope_following:"This & future",
+      settings:"Settings", language:"Language", save_image:"Save image", share:"Share", copied:"Copied to clipboard", edit_children:"Children",
+      to_today:"Today", brk:"Break", year:"Year", term_title:"Year & term", term_word:"Term", on_break:"On break",
+      achievement:"Routine tracker", this_month:"this month", close:"Close",
+      theme:"Theme", palette:"Color theme" },
+    ko: { dows:["일","월","화","수","목","금","토"], dowl:["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
+      app_title:"우리집 방과 후", tab_today:"오늘", tab_week:"시간표", tab_edit:"편집",
+      no_activities:"오늘은 방과 후 일정이 없어요 🌿", routines:"루틴", no_routines_today:"오늘 해당하는 루틴이 없어요.", today_todo:"할 일",
+      add_oneoff_ph:"오늘의 할 일 추가 (예: 도서관 책 반납)", all_done:"다 했어요! 🎉",
+      week_title:"주간 방과 후 시간표", seg_table:"표", seg_byday:"요일별", add_hint:"+ 버튼을 눌러 일정을 추가하세요", add_kid_first:"아이를 먼저 추가해 주세요.", today_tag:"오늘",
+      classinfo_title:"수업 정보", classinfo_sub:"(위치·셔틀·준비물 등)", add:"추가",
+      no_classes:"아직 등록된 수업 정보가 없어요.<br>‘추가’로 위치·셔틀·준비물을 적어두면 여기 한곳에 모여서 보여요.",
+      loc:"위치", shuttle:"셔틀", supplies:"준비물", yes:"있음", no:"없음", map:"지도",
+      cls_title:"수업 정보", cls_name_ph:"수업 이름 (예: 수영)", cls_who:"누구 수업?", cls_who_multi:"(여러 명 선택 가능)",
+      cls_loc_ph:"위치 (자유롭게 — 예: ○○센터 2층)", cls_map_ph:"지도 링크 또는 주소 (선택)", cls_shuttle:"셔틀버스",
+      cls_supplies_ph:"준비물 (예: 수영복, 수경)", cls_memo:"메모", cls_opt:"(선택)", cls_memo_ph:"예: 셔틀 정문 앞 3:20 탑승, 결제일 매월 5일",
+      no_kid_first:"아이를 먼저 추가해 주세요", del:"삭제", cancel:"취소", save:"저장",
+      routine_section:"루틴 · 반복할 요일을 골라요", routine_add_ph:"루틴 추가 (예: 숙제하기)", every:"매일", weekday:"평일",
+      kid_add:"아이 추가", new_kid:"새 아이", color:"색상",
+      act_new:"일정 추가", act_edit:"일정 수정", act_label_ph:"예: 수영, 피아노", repeat:"반복 요일", start_t:"시작", end_t:"종료", edit_btn:"수정",
+      act_from_note:"이번 주부터 적용돼요. 이전 주는 그대로예요.",
+      scope_label:"적용 범위", scope_one:"이번 주만", scope_following:"이번 주부터 모두",
+      settings:"설정", language:"언어", save_image:"이미지 저장", share:"공유", copied:"클립보드에 복사됨", edit_children:"아이별 설정",
+      to_today:"오늘로", brk:"방학", year:"연도", term_title:"연도 · 학기", term_word:"학기", on_break:"방학 중",
+      achievement:"루틴 기록", this_month:"이번 달", close:"닫기",
+      theme:"테마", palette:"색상 테마" },
+    zh: { dows:["日","一","二","三","四","五","六"], dowl:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
+      app_title:"放学后", tab_today:"今天", tab_week:"课表", tab_edit:"编辑",
+      no_activities:"今天没有课后安排 🌿", routines:"日常", no_routines_today:"今天没有日常任务。", today_todo:"待办",
+      add_oneoff_ph:"添加今天的待办（例如：归还图书）", all_done:"都完成啦！🎉",
+      week_title:"每周课后课表", seg_table:"表格", seg_byday:"按日", add_hint:"点击 + 添加课程", add_kid_first:"请先添加孩子。", today_tag:"今天",
+      classinfo_title:"课程信息", classinfo_sub:"（地点·班车·物品）", add:"添加",
+      no_classes:"还没有课程信息。<br>添加地点、班车和物品后会汇总在这里。",
+      loc:"地点", shuttle:"班车", supplies:"物品", yes:"有", no:"无", map:"地图",
+      cls_title:"课程信息", cls_name_ph:"课程名称（例如：游泳）", cls_who:"谁的课？", cls_who_multi:"（可多选）",
+      cls_loc_ph:"地点（自由填写 — 例如：○○中心2楼）", cls_map_ph:"地图链接或地址（可选）", cls_shuttle:"班车",
+      cls_supplies_ph:"物品（例如：泳衣、泳镜）", cls_memo:"备注", cls_opt:"（可选）", cls_memo_ph:"例如：班车正门3:20上车，每月5日缴费",
+      no_kid_first:"请先添加孩子", del:"删除", cancel:"取消", save:"保存",
+      routine_section:"日常 · 选择重复的星期", routine_add_ph:"添加日常（例如：写作业）", every:"每天", weekday:"工作日",
+      kid_add:"添加孩子", new_kid:"新孩子", color:"颜色",
+      act_new:"添加安排", act_edit:"修改安排", act_label_ph:"例如：游泳、钢琴", repeat:"重复", start_t:"开始", end_t:"结束", edit_btn:"修改",
+      act_from_note:"从本周起生效，之前的周保持不变。",
+      scope_label:"应用范围", scope_one:"仅本周", scope_following:"本周及以后",
+      settings:"设置", language:"语言", save_image:"保存图片", share:"分享", copied:"已复制到剪贴板", edit_children:"孩子设置",
+      to_today:"回到今天", brk:"假期", year:"年份", term_title:"年份 · 学期", term_word:"学期", on_break:"假期中",
+      achievement:"日常打卡", this_month:"本月", close:"关闭",
+      theme:"主题", palette:"配色" },
+    ja: { dows:["日","月","火","水","木","金","土"], dowl:["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
+      app_title:"放課後", tab_today:"今日", tab_week:"時間割", tab_edit:"編集",
+      no_activities:"今日は放課後の予定がありません 🌿", routines:"ルーティン", no_routines_today:"今日のルーティンはありません。", today_todo:"やること",
+      add_oneoff_ph:"今日のやることを追加（例：図書館の本を返す）", all_done:"ぜんぶ完了！🎉",
+      week_title:"週間時間割", seg_table:"表", seg_byday:"曜日別", add_hint:"＋ を押して予定を追加", add_kid_first:"先に子どもを追加してください。", today_tag:"今日",
+      classinfo_title:"教室情報", classinfo_sub:"（場所・送迎・持ち物）", add:"追加",
+      no_classes:"教室情報がまだありません。<br>場所・送迎・持ち物を入力するとここにまとまります。",
+      loc:"場所", shuttle:"送迎", supplies:"持ち物", yes:"あり", no:"なし", map:"地図",
+      cls_title:"教室情報", cls_name_ph:"教室名（例：水泳）", cls_who:"だれの教室？", cls_who_multi:"（複数選択可）",
+      cls_loc_ph:"場所（自由記入 — 例：○○センター2階）", cls_map_ph:"地図リンクまたは住所（任意）", cls_shuttle:"送迎バス",
+      cls_supplies_ph:"持ち物（例：水着、ゴーグル）", cls_memo:"メモ", cls_opt:"（任意）", cls_memo_ph:"例：送迎は正門3:20、支払いは毎月5日",
+      no_kid_first:"先に子どもを追加してください", del:"削除", cancel:"キャンセル", save:"保存",
+      routine_section:"ルーティン · くり返す曜日を選択", routine_add_ph:"ルーティンを追加（例：宿題）", every:"毎日", weekday:"平日",
+      kid_add:"子どもを追加", new_kid:"新しい子ども", color:"色",
+      act_new:"予定を追加", act_edit:"予定を編集", act_label_ph:"例：水泳、ピアノ", repeat:"くり返し", start_t:"開始", end_t:"終了", edit_btn:"編集",
+      act_from_note:"今週から適用されます。過去の週はそのままです。",
+      scope_label:"適用範囲", scope_one:"今週のみ", scope_following:"今週以降すべて",
+      settings:"設定", language:"言語", save_image:"画像を保存", share:"共有", copied:"クリップボードにコピーしました", edit_children:"子どもの設定",
+      to_today:"今日へ", brk:"休み", year:"年", term_title:"年 · 学期", term_word:"学期", on_break:"休み中",
+      achievement:"ルーティン記録", this_month:"今月", close:"閉じる",
+      theme:"テーマ", palette:"カラー" }
+  };
 
   var SEED = {
-    kids: [
-      { id: "k1", name: "첫째", color: "#F2A65A" },
-      { id: "k2", name: "둘째", color: "#6FA86B" }
-    ],
+    lang:"en", weekLayout:"grid", term:{ year:new Date().getFullYear(), term:1, onBreak:false }, theme:{ color:"forest" },
+    kids: [ { id:"k1", name:"Child 1", color:"#F2A65A", photo:"" }, { id:"k2", name:"Child 2", color:"#6FA86B", photo:"" } ],
     schedule: {
-      k1: { 1: [{ id: "a1", time: "15:30", label: "수영" }], 3: [{ id: "a2", time: "16:00", label: "피아노" }], 5: [{ id: "a3", time: "15:30", label: "도서관" }] },
-      k2: { 2: [{ id: "a4", time: "16:00", label: "태권도" }], 4: [{ id: "a5", time: "15:30", label: "미술" }] }
+      k1: [ {id:"a1",days:[1],start:"15:30",end:"16:30",label:"Swimming",from:null,until:null}, {id:"a2",days:[3],start:"16:00",end:"17:00",label:"Piano",from:null,until:null}, {id:"a3",days:[5],start:"15:30",end:"16:30",label:"Library",from:null,until:null} ],
+      k2: [ {id:"a4",days:[2],start:"16:00",end:"17:00",label:"Taekwondo",from:null,until:null}, {id:"a5",days:[4],start:"15:30",end:"16:30",label:"Art",from:null,until:null} ]
     },
-    tasks: {
-      k1: [{ id: "t1", label: "숙제하기" }, { id: "t2", label: "책가방 챙기기" }, { id: "t3", label: "양치하기" }, { id: "t4", label: "책 읽기" }],
-      k2: [{ id: "t5", label: "숙제하기" }, { id: "t6", label: "정리정돈" }, { id: "t7", label: "양치하기" }]
+    routines: {
+      k1: [ {id:"r1",label:"Homework",days:[1,2,3,4,5]}, {id:"r2",label:"Pack school bag",days:[1,2,3,4,5]}, {id:"r3",label:"Brush teeth",days:ALL.slice()}, {id:"r4",label:"Read a book",days:ALL.slice()} ],
+      k2: [ {id:"r5",label:"Homework",days:[1,2,3,4,5]}, {id:"r6",label:"Tidy up",days:ALL.slice()}, {id:"r7",label:"Brush teeth",days:ALL.slice()} ]
     },
-    done: {}
+    classes: [
+      { id:"c1", name:"Swimming", kidIds:["k1"], location:"○○ Sports Center 2F", mapUrl:"", shuttle:true, supplies:"Swimsuit, goggles, towel", memo:"Shuttle at the front gate 3:20" },
+      { id:"c2", name:"Piano", kidIds:["k1"], location:"○○ Music Academy", mapUrl:"", shuttle:false, supplies:"Sheet music", memo:"" },
+      { id:"c3", name:"Taekwondo", kidIds:["k2"], location:"○○ Gym", mapUrl:"", shuttle:true, supplies:"Dobok", memo:"" },
+      { id:"c4", name:"Art", kidIds:["k2"], location:"○○ Art Studio", mapUrl:"", shuttle:false, supplies:"Apron", memo:"" }
+    ],
+    oneoffs:{}, done:{}
   };
 
   // ── 유틸 ──
-  function pad(n) { return String(n).padStart(2, "0"); }
-  function todayKey(d) { d = d || new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
-  function todayDow() { return new Date().getDay(); }
-  function uid() { return "x" + Math.random().toString(36).slice(2, 9); }
-  function esc(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
-    });
+  function byId(id){ return document.getElementById(id); }
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function addHour(hhmm){ if(!hhmm) return ""; var p=hhmm.split(":"); var h=+p[0]||0, m=+p[1]||0; h=(h+1)%24; return pad(h)+":"+pad(m); }
+  function ymd(y,m,d){ return y+"-"+pad(m+1)+"-"+pad(d); }
+  function todayKey(d){ d=d||new Date(); return ymd(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function parseKey(k){ var p=k.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function todayDow(){ return new Date().getDay(); }
+  function uid(){ return "x"+Math.random().toString(36).slice(2,9); }
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function tint(hex,a){ var h=hex.replace("#",""); return "rgba("+parseInt(h.slice(0,2),16)+","+parseInt(h.slice(2,4),16)+","+parseInt(h.slice(4,6),16)+","+a+")"; }
+  function mapsSearch(q){ return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q); }
+  function classMapHref(c){ var mu=(c.mapUrl||"").trim(); if(mu) return /^https?:\/\//i.test(mu)?mu:mapsSearch(mu); var loc=(c.location||"").trim(); return loc?mapsSearch(loc):""; }
+  function pruneByDate(obj){ var co=new Date(); co.setDate(co.getDate()-45); var cut=todayKey(co), out={}; for(var kid in obj){ out[kid]={}; for(var dt in obj[kid]){ if(dt>=cut) out[kid][dt]=obj[kid][dt]; } } return out; }
+  function shade(ratio, hex){ return tint(hex, Math.min(0.92, 0.16+0.76*ratio)); }
+  function sortDays(arr){ return arr.slice().sort(function(a,b){return DAYS.indexOf(a)-DAYS.indexOf(b);}); }
+  function daysSummary(arr){ var s=sortDays(arr); if(s.length===7) return t("every"); if(s.length===5 && [1,2,3,4,5].every(function(d){return s.indexOf(d)>=0;})) return t("weekday"); return s.map(function(d){return dows()[d];}).join(" · "); }
+  function icon(name,size,color,sw){
+    size=size||20; color=color||"currentColor"; sw=sw||2;
+    var p={ check:'<path d="M20 6 9 17l-5-5"/>', plus:'<path d="M12 5v14M5 12h14"/>', x:'<path d="M18 6 6 18M6 6l12 12"/>',
+      trash:'<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/>',
+      sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/>',
+      cal:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+      edit:'<path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+      pin:'<path d="M12 21s6.5-5 6.5-10.5a6.5 6.5 0 1 0-13 0C5.5 16 12 21 12 21Z"/><circle cx="12" cy="10.5" r="2.3"/>',
+      bus:'<rect x="4" y="5" width="16" height="12" rx="2"/><path d="M4 11h16"/><path d="M7 17v2M17 17v2"/>',
+      bag:'<path d="M5 9h14l-1 11H6L5 9Z"/><path d="M9 9V7a3 3 0 0 1 6 0v2"/>',
+      ext:'<path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"/>',
+      image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/>',
+      share:'<path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M12 16V4"/><path d="m8 8 4-4 4 4"/>',
+      globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/>',
+      palette:'<circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="9.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="9.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="9" cy="15" r="1.2" fill="currentColor" stroke="none"/>',
+      cam:'<path d="M3 8a2 2 0 0 1 2-2h2l1.4-2h7.2L19 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Z"/><circle cx="12" cy="13" r="3.6"/>',
+      clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+      repeat:'<path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
+      left:'<path d="m15 18-6-6 6-6"/>', right:'<path d="m9 18 6-6-6-6"/>',
+      cdown:'<path d="m6 9 6 6 6-6"/>', cup:'<path d="m18 15-6-6-6 6"/>' };
+    return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round">'+p[name]+'</svg>';
   }
-  function tint(hex, a) {
-    var h = hex.replace("#", "");
-    return "rgba(" + parseInt(h.slice(0, 2), 16) + "," + parseInt(h.slice(2, 4), 16) + "," + parseInt(h.slice(4, 6), 16) + "," + a + ")";
-  }
-  function pruneDone(done) {
-    var co = new Date(); co.setDate(co.getDate() - 14);
-    var cut = todayKey(co), out = {};
-    for (var kid in done) { out[kid] = {}; for (var dt in done[kid]) { if (dt >= cut) out[kid][dt] = done[kid][dt]; } }
-    return out;
-  }
-  function icon(name, size, color, sw) {
-    size = size || 20; color = color || "currentColor"; sw = sw || 2;
-    var p = {
-      check: '<path d="M20 6 9 17l-5-5"/>',
-      plus: '<path d="M12 5v14M5 12h14"/>',
-      x: '<path d="M18 6 6 18M6 6l12 12"/>',
-      trash: '<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/>',
-      sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/>',
-      cal: '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
-      edit: '<path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>'
-    };
-    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="' + color +
-      '" stroke-width="' + sw + '" stroke-linecap="round" stroke-linejoin="round">' + p[name] + '</svg>';
-  }
-  function ring(pct, color) {
-    var r = 11, c = 2 * Math.PI * r;
-    return '<svg class="as-ring" width="28" height="28" viewBox="0 0 28 28">' +
-      '<circle class="bg" cx="14" cy="14" r="' + r + '" fill="none" stroke-width="3.5"/>' +
-      '<circle class="fg" cx="14" cy="14" r="' + r + '" fill="none" stroke-width="3.5" stroke="' + color +
-      '" stroke-dasharray="' + c + '" stroke-dashoffset="' + (c * (1 - pct)) + '"/></svg>';
-  }
+  function ring(pct,color){ var r=11,c=2*Math.PI*r; return '<svg class="as-ring" width="28" height="28" viewBox="0 0 28 28"><circle class="bg" cx="14" cy="14" r="'+r+'" fill="none" stroke-width="3.5"/><circle class="fg" cx="14" cy="14" r="'+r+'" fill="none" stroke-width="3.5" stroke="'+color+'" stroke-dasharray="'+c+'" stroke-dashoffset="'+(c*(1-pct))+'"/></svg>'; }
+
+  // ── i18n ──
+  function Lng(){ return T[data.lang]||T.en; }
+  function t(k){ var v=Lng()[k]; return v!=null?v:(T.en[k]!=null?T.en[k]:k); }
+  function dows(){ return Lng().dows||T.en.dows; }
+  function dowl(){ return Lng().dowl||T.en.dowl; }
+  function dateLabelText(d){ d=d||new Date(); var y=d.getFullYear(), m=d.getMonth()+1, day=d.getDate(), lang=data.lang;
+    if(lang==="en") return EN_MONTHS[d.getMonth()]+" "+day+", "+y; if(lang==="ko") return y+"년 "+m+"월 "+day+"일"; return y+"年"+m+"月"+day+"日"; }
+  function dowLabelText(d){ d=d||new Date(); return dowl()[d.getDay()]; }
+  function monthLabelText(y,m){ var lang=data.lang; if(lang==="en") return EN_MONTHS[m]+" "+y; if(lang==="ko") return y+"년 "+(m+1)+"월"; return y+"年"+(m+1)+"月"; }
+  function termLabel(){ var tm=data.term, y=tm.year, n=tm.term, lang=data.lang, main;
+    if(lang==="ko") main=y+"년 "+n+"학기"; else if(lang==="en") main=y+" Term "+n; else if(lang==="zh") main=y+"年 第"+n+"学期"; else main=y+"年 "+n+"学期";
+    return { main:main, badge: tm.onBreak ? t("brk") : "" }; }
+  function weekMonday(offset){ var d=new Date(); var dow=d.getDay(); var diff=(dow===0?6:dow-1); var mon=new Date(d.getFullYear(),d.getMonth(),d.getDate()); mon.setDate(mon.getDate()-diff+(offset||0)*7); return mon; }
+  function weekDates(offset){ var mon=weekMonday(offset); return DAYS.map(function(_,i){ var dd=new Date(mon); dd.setDate(mon.getDate()+i); return dd; }); }
+  function weekRangeText(offset){ var wd=weekDates(offset), a=wd[0], b=wd[6]; return (a.getMonth()+1)+"/"+a.getDate()+"–"+(b.getMonth()+1)+"/"+b.getDate(); }
+  function mondayKey(d){ var dow=d.getDay(), diff=(dow===0?6:dow-1); var m=new Date(d.getFullYear(),d.getMonth(),d.getDate()); m.setDate(m.getDate()-diff); return todayKey(m); }
+  function curWeekKey(){ return todayKey(weekMonday(weekOffset)); }
+  function segActive(seg,wk){ return (!seg.from || wk>=seg.from) && (!seg.until || wk<seg.until); }
+  function addDays(d,n){ var x=new Date(d.getFullYear(),d.getMonth(),d.getDate()); x.setDate(x.getDate()+n); return x; }
+  function mkSeg(v,from,until){ return {id:uid(),days:(v.days.slice?v.days.slice():v.days),start:v.start,end:v.end,label:v.label,from:from||null,until:until||null}; }
 
   // ── 상태 ──
-  function loadData() {
+  function loadData(){
     try {
-      var raw = localStorage.getItem(KEY);
-      if (raw) {
-        var p = JSON.parse(raw);
-        p.kids = p.kids || []; p.schedule = p.schedule || {}; p.tasks = p.tasks || {};
-        p.done = pruneDone(p.done || {});
+      var raw=localStorage.getItem(KEY);
+      if(raw){
+        var p=JSON.parse(raw);
+        p.kids=p.kids||[];
+        if(!p.routines){ p.routines={}; var old=p.tasks||{}; for(var kid in old) p.routines[kid]=(old[kid]||[]).map(function(x){return {id:x.id,label:x.label,days:ALL.slice()};}); }
+        p.kids.forEach(function(k){ if(!p.routines[k.id]) p.routines[k.id]=[]; if(typeof k.photo!=="string") k.photo=""; });
+        // schedule migration → flat recurring list per kid
+        var sch=p.schedule||{}, nsch={};
+        p.kids.forEach(function(k){ nsch[k.id]=[]; });
+        for(var kid2 in sch){ var v=sch[kid2]; nsch[kid2]=nsch[kid2]||[];
+          if(Array.isArray(v)){ nsch[kid2]=v.map(function(a){ return {id:a.id||uid(),days:(a.days&&a.days.length?a.days:[]),start:a.start||a.time||"15:30",end:a.end||"",label:a.label||"",from:(a.from||null),until:(a.until||null)}; }); }
+          else if(v && typeof v==="object"){ for(var dow in v){ (v[dow]||[]).forEach(function(a){ nsch[kid2].push({id:a.id||uid(),days:[+dow],start:a.time||a.start||"15:30",end:a.end||"",label:a.label||"",from:null,until:null}); }); } }
+        }
+        p.schedule=nsch;
+        p.oneoffs=pruneByDate(p.oneoffs||{}); p.done=pruneByDate(p.done||{});
+        p.classes=(p.classes||[]).map(function(c){ return {id:c.id,name:c.name||"",kidIds:c.kidIds||(c.kidId?[c.kidId]:[]),location:c.location||"",mapUrl:c.mapUrl||"",shuttle:!!c.shuttle,supplies:c.supplies||"",memo:c.memo||""}; });
+        if(p.weekLayout!=="list"&&p.weekLayout!=="grid") p.weekLayout="grid";
+        if(LANGS.indexOf(p.lang)<0) p.lang="ko";
+        if(!p.term) p.term={year:new Date().getFullYear(),term:1,onBreak:false};
+        if(typeof p.term.year!=="number") p.term.year=new Date().getFullYear();
+        if(typeof p.term.term!=="number") p.term.term=1;
+        if(!p.theme) p.theme={color:"forest"};
+        if(!THEMES[p.theme.color]) p.theme.color="forest";
+        delete p.tasks;
+        try{ localStorage.setItem(KEY,JSON.stringify(p)); }catch(e){}
         return p;
       }
-    } catch (e) {}
+    } catch(e){}
     return JSON.parse(JSON.stringify(SEED));
   }
-  var data = loadData();
-  var view = "today";
-  var adding = null; // { kidId, dow }
-  var root = document.getElementById("root");
+  var data=loadData();
+  var view="today";
+  var selectedDate=todayKey();
+  var weekOffset=0;
+  var actEdit=null, actView=null, classEdit=null, cal=null, termEdit=false;
+  var kidExpanded={}, achvExpanded={};
+  var root=document.getElementById("root");
 
-  function persist() { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {} }
-  function save() { persist(); render(); }
-  function actsFor(kidId, dow) {
-    var list = (data.schedule[kidId] && data.schedule[kidId][dow]) || [];
-    return list.slice().sort(function (a, b) { return a.time.localeCompare(b.time); });
-  }
+  function persist(){ try{ localStorage.setItem(KEY,JSON.stringify(data)); }catch(e){ try{ toast("저장 공간이 가득 찼어요"); }catch(_){} } }
+  function save(){ persist(); render(); }
+  function actsFor(kidId,dow,wk){ return (data.schedule[kidId]||[]).filter(function(a){return a.days.indexOf(dow)>=0 && segActive(a,wk);}).slice().sort(function(a,b){return a.start.localeCompare(b.start);}); }
+  function findAct(kidId,id){ var a=data.schedule[kidId]||[]; for(var i=0;i<a.length;i++) if(a[i].id===id) return a[i]; return null; }
+  function findRoutine(kidId,rid){ var a=data.routines[kidId]||[]; for(var i=0;i<a.length;i++) if(a[i].id===rid) return a[i]; return null; }
+  function routinesFor(kidId,dow){ return (data.routines[kidId]||[]).filter(function(r){return r.days.indexOf(dow)>=0;}); }
+  function kidRoutineRatio(kidId,key,dow){ var rs=routinesFor(kidId,dow); if(!rs.length) return 0; var dl=(data.done[kidId]&&data.done[kidId][key])||[]; var done=rs.filter(function(r){return dl.indexOf(r.id)>=0;}).length; return done/rs.length; }
+  function monthlyPct(kidId){ var now=new Date(), y=now.getFullYear(), m=now.getMonth(), dim=new Date(y,m+1,0).getDate(), tk=todayKey(), total=0, done=0;
+    for(var day=1;day<=dim;day++){ var key=ymd(y,m,day); if(key>tk) continue; var dow=new Date(y,m,day).getDay(); var rs=routinesFor(kidId,dow); var dl=(data.done[kidId]&&data.done[kidId][key])||[]; total+=rs.length; done+=rs.filter(function(r){return dl.indexOf(r.id)>=0;}).length; }
+    return total?Math.round(done/total*100):0; }
 
   // ── 액션 ──
-  function toggleTask(kidId, taskId) {
-    var tk = todayKey();
-    data.done[kidId] = data.done[kidId] || {};
-    var arr = (data.done[kidId][tk] || []).slice();
-    var i = arr.indexOf(taskId);
-    if (i >= 0) arr.splice(i, 1); else arr.push(taskId);
-    data.done[kidId][tk] = arr; save();
+  function toggleItem(kidId,itemId){ var tk=selectedDate; data.done[kidId]=data.done[kidId]||{}; var arr=(data.done[kidId][tk]||[]).slice(); var i=arr.indexOf(itemId); if(i>=0) arr.splice(i,1); else arr.push(itemId); data.done[kidId][tk]=arr; save(); }
+  function addKid(){ var id=uid(); data.kids.push({id:id,name:t("new_kid"),color:PALETTE[data.kids.length%PALETTE.length],photo:""}); data.schedule[id]=[]; data.routines[id]=[]; kidExpanded[id]=true; save(); }
+  function updateKid(id,patch){ for(var i=0;i<data.kids.length;i++) if(data.kids[i].id===id){ for(var k in patch) data.kids[i][k]=patch[k]; } save(); }
+  function removeKid(id){ data.kids=data.kids.filter(function(k){return k.id!==id;}); delete data.schedule[id]; delete data.routines[id]; delete data.oneoffs[id]; delete data.done[id]; data.classes=(data.classes||[]).map(function(c){ c.kidIds=(c.kidIds||[]).filter(function(x){return x!==id;}); return c; }); save(); }
+  function pickPhoto(kidId){
+    var inp=document.createElement("input"); inp.type="file"; inp.accept="image/*";
+    inp.onchange=function(){ var f=inp.files&&inp.files[0]; if(!f) return; var rd=new FileReader();
+      rd.onload=function(){ var img=new Image(); img.onload=function(){ var sz=220, cv=document.createElement("canvas"); cv.width=sz; cv.height=sz; var ctx=cv.getContext("2d"); var s=Math.min(img.width,img.height), sx=(img.width-s)/2, sy=(img.height-s)/2; ctx.drawImage(img,sx,sy,s,s,0,0,sz,sz); var durl; try{ durl=cv.toDataURL("image/jpeg",0.82); }catch(e){ return; } for(var i=0;i<data.kids.length;i++) if(data.kids[i].id===kidId) data.kids[i].photo=durl; save(); }; img.src=rd.result; };
+      rd.readAsDataURL(f); };
+    inp.click();
   }
-  function addKid() {
-    var id = uid();
-    data.kids.push({ id: id, name: "새 아이", color: PALETTE[data.kids.length % PALETTE.length] });
-    data.schedule[id] = {}; data.tasks[id] = []; save();
+  function removePhoto(kidId){ for(var i=0;i<data.kids.length;i++) if(data.kids[i].id===kidId) data.kids[i].photo=""; save(); }
+  function addRoutine(kidId,label){ if(!label||!label.trim()) return; data.routines[kidId]=data.routines[kidId]||[]; data.routines[kidId].push({id:uid(),label:label.trim(),days:ALL.slice()}); save(); }
+  function removeRoutine(kidId,rid){ data.routines[kidId]=(data.routines[kidId]||[]).filter(function(r){return r.id!==rid;}); save(); }
+  function toggleRoutineDay(kidId,rid,d){ var r=findRoutine(kidId,rid); if(!r) return; var i=r.days.indexOf(d); if(i>=0) r.days.splice(i,1); else r.days.push(d); r.days.sort(function(a,b){return a-b;}); save(); }
+  function presetRoutine(kidId,rid,preset){ var r=findRoutine(kidId,rid); if(!r) return; r.days=preset==="weekday"?[1,2,3,4,5]:ALL.slice(); save(); }
+  function updateRoutineName(kidId,rid,name){ var r=findRoutine(kidId,rid); if(r){ r.label=name; persist(); } }
+  function addOneoff(kidId,label){ if(!label||!label.trim()) return; var tk=selectedDate; data.oneoffs[kidId]=data.oneoffs[kidId]||{}; data.oneoffs[kidId][tk]=data.oneoffs[kidId][tk]||[]; data.oneoffs[kidId][tk].push({id:uid(),label:label.trim()}); save(); }
+  function removeOneoff(kidId,itemId){ var tk=selectedDate; if(data.oneoffs[kidId]&&data.oneoffs[kidId][tk]) data.oneoffs[kidId][tk]=data.oneoffs[kidId][tk].filter(function(o){return o.id!==itemId;}); save(); }
+  // 일정(반복) 편집
+  function openActAdd(kidId,dow){ actView=null; actEdit={id:null,kidId:kidId,days:[dow],start:"15:30",end:addHour("15:30"),label:"",weekKey:curWeekKey()}; render(); }
+  function openActView(kidId,id){ actEdit=null; actView={kidId:kidId,id:id,weekKey:curWeekKey()}; render(); }
+  function openActEdit(kidId,id){ var a=findAct(kidId,id); if(!a) return; var wk=(actView&&actView.weekKey)||curWeekKey(); actView=null; actEdit={id:a.id,kidId:kidId,days:a.days.slice(),start:a.start,end:(a.end||addHour(a.start)),label:a.label,weekKey:wk,scope:"following"}; render(); }
+  function syncActForm(){ if(!actEdit) return; var l=byId("act-label"),s=byId("act-start"),e=byId("act-end"); if(l)actEdit.label=l.value; if(s)actEdit.start=s.value; if(e)actEdit.end=e.value; }
+  function actToggleDay(d){ syncActForm(); var i=actEdit.days.indexOf(d); if(i>=0) actEdit.days.splice(i,1); else actEdit.days.push(d); render(); }
+  function actPreset(preset){ syncActForm(); actEdit.days = preset==="weekday"?[1,2,3,4,5]:ALL.slice(); render(); }
+  function actSetScope(sc){ syncActForm(); actEdit.scope=sc; render(); }
+  function saveAct(){ syncActForm(); if(!actEdit.label.trim()){ var l=byId("act-label"); if(l) l.focus(); return; } if(!actEdit.days.length){ return; } if(!actEdit.start) actEdit.start="15:30";
+    var wk=actEdit.weekKey||curWeekKey();
+    var vals={days:sortDays(actEdit.days),start:actEdit.start,end:actEdit.end||"",label:actEdit.label.trim()};
+    var arr=data.schedule[actEdit.kidId]=data.schedule[actEdit.kidId]||[];
+    if(!actEdit.id){ arr.push(mkSeg(vals,wk,null)); actEdit=null; save(); return; }
+    var seg=findAct(actEdit.kidId,actEdit.id); if(!seg){ actEdit=null; save(); return; }
+    var oldFrom=seg.from, oldUntil=seg.until, oldVals={days:seg.days.slice(),start:seg.start,end:seg.end,label:seg.label};
+    data.schedule[actEdit.kidId]=arr.filter(function(a){return a.id!==seg.id;}); arr=data.schedule[actEdit.kidId];
+    var nextWk=mondayKey(addDays(parseKey(wk),7));
+    if(!oldFrom || oldFrom<wk) arr.push(mkSeg(oldVals,oldFrom,wk));
+    if(actEdit.scope==="one"){ arr.push(mkSeg(vals,wk,nextWk)); if(!oldUntil || oldUntil>nextWk) arr.push(mkSeg(oldVals,nextWk,oldUntil)); }
+    else { arr.push(mkSeg(vals,wk,oldUntil)); }
+    actEdit=null; save(); }
+  function removeActivity(kidId,id,wk){ wk=wk||curWeekKey(); var arr=data.schedule[kidId]||[]; var seg=findAct(kidId,id); if(!seg) return; if(seg.from===wk){ data.schedule[kidId]=arr.filter(function(a){return a.id!==id;}); } else { seg.until=wk; } save(); }
+  function syncClassForm(){ if(!classEdit) return; var n=byId("cls-name"),l=byId("cls-loc"),m=byId("cls-map"),s=byId("cls-supplies"),mo=byId("cls-memo"); if(n)classEdit.name=n.value; if(l)classEdit.location=l.value; if(m)classEdit.mapUrl=m.value; if(s)classEdit.supplies=s.value; if(mo)classEdit.memo=mo.value; }
+  function openClassAdd(){ classEdit={id:null,name:"",kidIds:[],location:"",mapUrl:"",shuttle:false,supplies:"",memo:""}; render(); }
+  function openClassEdit(id){ var c=(data.classes||[]).filter(function(x){return x.id===id;})[0]; if(c){ classEdit={id:c.id,name:c.name,kidIds:(c.kidIds||[]).slice(),location:c.location||"",mapUrl:c.mapUrl||"",shuttle:!!c.shuttle,supplies:c.supplies||"",memo:c.memo||""}; render(); } }
+  function classToggleKid(kidId){ syncClassForm(); var i=classEdit.kidIds.indexOf(kidId); if(i>=0) classEdit.kidIds.splice(i,1); else classEdit.kidIds.push(kidId); render(); }
+  function classSetShuttle(v){ syncClassForm(); classEdit.shuttle=v; render(); }
+  function saveClass(){ syncClassForm(); if(!classEdit.name||!classEdit.name.trim()){ var n=byId("cls-name"); if(n) n.focus(); return; } data.classes=data.classes||[]; var obj={id:classEdit.id||uid(),name:classEdit.name.trim(),kidIds:classEdit.kidIds.slice(),location:classEdit.location,mapUrl:classEdit.mapUrl,shuttle:classEdit.shuttle,supplies:classEdit.supplies,memo:classEdit.memo}; if(classEdit.id){ for(var i=0;i<data.classes.length;i++) if(data.classes[i].id===classEdit.id) data.classes[i]=obj; } else data.classes.push(obj); classEdit=null; save(); }
+  function deleteClass(id){ data.classes=(data.classes||[]).filter(function(c){return c.id!==id;}); classEdit=null; save(); }
+
+  // ── 이미지 / 공유 ──
+  function withFonts(cb){ try{ if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(cb).catch(cb); return; } }catch(e){} cb(); }
+  function clipText(ctx,txt,maxW){ if(ctx.measureText(txt).width<=maxW) return txt; var s=txt; while(s.length>1&&ctx.measureText(s+"…").width>maxW) s=s.slice(0,-1); return s+"…"; }
+  function imgFilename(){ return "schedule_"+todayKey()+".png"; }
+  function canvasFont(){ var l=data.lang; return l==="en"?"Nunito":l==="ja"?"Kosugi Maru":l==="zh"?"Noto Sans SC":"Gothic A1"; }
+  function canvasDisp(){ var l=data.lang; return l==="en"?"Fredoka":l==="ja"?"Kosugi Maru":l==="zh"?"ZCOOL KuaiLe":"Jua"; }
+  function buildScheduleCanvas(){
+    var cf=canvasFont(), cd=canvasDisp(), wd=weekDates(weekOffset), tkNow=todayKey(), th=THEMES[data.theme.color]||THEMES.forest, wk=curWeekKey();
+    var scale=2, W=800, padX=28, padTop=28, nameW=112, dayW=(W-padX*2-nameW)/7;
+    var headerH=100, colHeadH=56, rowPadV=14, lineH=25, minRowH=78;
+    var kids=data.kids;
+    var rowH=kids.map(function(kid){ var mx=1; DAYS.forEach(function(d){ var n=actsFor(kid.id,d,wk).length; if(n>mx) mx=n; }); return Math.max(minRowH, rowPadV*2+mx*lineH); });
+    var gridTop=headerH+colHeadH, H=gridTop+rowH.reduce(function(a,b){return a+b;},0)+padTop;
+    var cv=document.createElement("canvas"); cv.width=W*scale; cv.height=H*scale; var ctx=cv.getContext("2d"); ctx.scale(scale,scale);
+    ctx.fillStyle="#FFFFFF"; ctx.fillRect(0,0,W,H);
+    ctx.textBaseline="top"; ctx.textAlign="left";
+    ctx.fillStyle="#20302A"; ctx.font='700 26px "'+cd+'", sans-serif'; ctx.fillText(clipText(ctx,t("week_title")+" ("+weekRangeText(weekOffset)+")",W-padX*2), padX, padTop);
+    ctx.fillStyle="#6B7A72"; ctx.font='600 15px "'+cf+'", sans-serif'; ctx.fillText(termLabel().main + (data.term.onBreak?"  ("+t("brk")+")":""), padX, padTop+38);
+    DAYS.forEach(function(d,i){ if(todayKey(wd[i])===tkNow){ ctx.fillStyle=th.s; ctx.fillRect(padX+nameW+dayW*i,gridTop,dayW,H-gridTop-padTop); } });
+    ctx.textAlign="center";
+    DAYS.forEach(function(d,i){ var isT=todayKey(wd[i])===tkNow; ctx.textBaseline="top"; ctx.fillStyle=isT?th.p:"#6B7A72"; ctx.font='700 15px "'+cf+'", sans-serif'; ctx.fillText(dows()[d], padX+nameW+dayW*i+dayW/2, headerH+8); ctx.font='600 12px "'+cf+'", sans-serif'; ctx.fillStyle=isT?th.p:"#9aa6a0"; ctx.fillText((wd[i].getMonth()+1)+"/"+wd[i].getDate(), padX+nameW+dayW*i+dayW/2, headerH+28); });
+    ctx.strokeStyle="#E4E8E2"; ctx.lineWidth=1;
+    for(var i2=0;i2<=7;i2++){ var x=padX+nameW+dayW*i2; ctx.beginPath(); ctx.moveTo(x,gridTop); ctx.lineTo(x,H-padTop); ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(padX,gridTop); ctx.lineTo(W-padX,gridTop); ctx.stroke();
+    var y=gridTop;
+    kids.forEach(function(kid,ri){ var rh=rowH[ri];
+      ctx.fillStyle=kid.color; ctx.beginPath(); ctx.arc(padX+9,y+rh/2,5,0,7); ctx.fill();
+      ctx.fillStyle="#20302A"; ctx.font='700 14px "'+cf+'", sans-serif'; ctx.textAlign="left"; ctx.textBaseline="middle"; ctx.fillText(clipText(ctx,kid.name,nameW-28), padX+20, y+rh/2);
+      DAYS.forEach(function(d,i){ var cx=padX+nameW+dayW*i, acts=actsFor(kid.id,d,wk); ctx.textAlign="center"; ctx.textBaseline="top"; acts.forEach(function(a,ai){ ctx.font='700 12px "'+cf+'", sans-serif'; ctx.fillStyle=kid.color; ctx.fillText(clipText(ctx,a.start+" "+a.label,dayW-8), cx+dayW/2, y+rowPadV+ai*lineH); }); });
+      ctx.strokeStyle="#E4E8E2"; ctx.beginPath(); ctx.moveTo(padX,y+rh); ctx.lineTo(W-padX,y+rh); ctx.stroke(); y+=rh;
+    });
+    return cv;
   }
-  function updateKid(id, patch) {
-    for (var i = 0; i < data.kids.length; i++) if (data.kids[i].id === id) { for (var k in patch) data.kids[i][k] = patch[k]; }
-    save();
-  }
-  function removeKid(id) {
-    data.kids = data.kids.filter(function (k) { return k.id !== id; });
-    delete data.schedule[id]; delete data.tasks[id]; delete data.done[id]; save();
-  }
-  function addTask(kidId, label) {
-    if (!label || !label.trim()) return;
-    data.tasks[kidId] = data.tasks[kidId] || [];
-    data.tasks[kidId].push({ id: uid(), label: label.trim() }); save();
-  }
-  function removeTask(kidId, taskId) {
-    data.tasks[kidId] = (data.tasks[kidId] || []).filter(function (t) { return t.id !== taskId; }); save();
-  }
-  function confirmAdd() {
-    var tEl = document.getElementById("add-time"), lEl = document.getElementById("add-label");
-    var time = tEl ? tEl.value : "15:30", label = lEl ? lEl.value : "";
-    if (!adding || !label.trim()) { adding = null; render(); return; }
-    var kidId = adding.kidId, dow = adding.dow;
-    data.schedule[kidId] = data.schedule[kidId] || {};
-    var list = (data.schedule[kidId][dow] || []).concat([{ id: uid(), time: time, label: label.trim() }]);
-    list.sort(function (a, b) { return a.time.localeCompare(b.time); });
-    data.schedule[kidId][dow] = list; adding = null; save();
-  }
-  function removeActivity(kidId, dow, actId) {
-    if (data.schedule[kidId] && data.schedule[kidId][dow])
-      data.schedule[kidId][dow] = data.schedule[kidId][dow].filter(function (a) { return a.id !== actId; });
-    save();
+  function downloadImage(){ withFonts(function(){ var cv=buildScheduleCanvas(); cv.toBlob(function(blob){ if(!blob) return; var url=URL.createObjectURL(blob), a=document.createElement("a"); a.href=url; a.download=imgFilename(); document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function(){URL.revokeObjectURL(url);},1500); }); }); }
+  function scheduleText(){ var lines=[t("week_title")+" ("+weekRangeText(weekOffset)+")"], wk=curWeekKey(); data.kids.forEach(function(kid){ lines.push("["+kid.name+"]"); DAYS.forEach(function(d){ actsFor(kid.id,d,wk).forEach(function(a){ lines.push(dows()[d]+" "+a.start+" "+a.label); }); }); lines.push(""); }); return lines.join("\n").trim(); }
+  function toast(msg){ var el=document.createElement("div"); el.textContent=msg; el.style.cssText="position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#20302A;color:#fff;padding:10px 16px;border-radius:12px;font-size:13.5px;font-weight:700;z-index:60;opacity:0;transition:opacity .2s;max-width:84%;text-align:center"; document.body.appendChild(el); requestAnimationFrame(function(){ el.style.opacity="1"; }); setTimeout(function(){ el.style.opacity="0"; setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },300); },1900); }
+  function shareSchedule(){ var url=location.href, text=scheduleText(); withFonts(function(){ var cv=buildScheduleCanvas(); cv.toBlob(function(blob){ var file=null; try{ if(blob) file=new File([blob],imgFilename(),{type:"image/png"}); }catch(e){} if(file&&navigator.canShare&&navigator.canShare({files:[file]})){ navigator.share({files:[file],title:t("week_title"),text:text}).catch(function(){}); } else if(navigator.share){ navigator.share({title:t("week_title"),text:text,url:url}).catch(function(){}); } else if(navigator.clipboard){ navigator.clipboard.writeText(text+"\n"+url).then(function(){toast(t("copied"));}).catch(function(){toast(t("copied"));}); } else toast(t("copied")); }); }); }
+
+  // ── 화면 조각 ──
+  function avatarHTML(kid){ var inner = kid.photo ? '<img src="'+kid.photo+'" alt="">' : '<span class="ph">'+icon("cam",26)+'</span>'; var rm = kid.photo ? '<button class="as-avatar-rm" data-act="photo-rm" data-kid="'+kid.id+'" aria-label="'+t("del")+'">'+icon("x",11,"#fff")+'</button>' : ''; return '<div class="as-avatar-wrap"><div class="as-avatar" data-act="photo" data-kid="'+kid.id+'" role="button" tabindex="0">'+inner+'</div>'+rm+'</div>'; }
+  function taskRow(kidId,itemId,label,on,deletable){ return '<div class="as-task '+(on?"on":"")+'" data-act="toggle" data-kid="'+kidId+'" data-task="'+itemId+'" role="checkbox" aria-checked="'+on+'" tabindex="0"><span class="as-box">'+(on?icon("check",15,"#fff",3):"")+'</span><span class="as-label">'+esc(label)+'</span>'+(deletable?'<span class="as-spacer"></span><span class="as-oneoff-x" data-act="rm-oneoff" data-kid="'+kidId+'" data-id="'+itemId+'">'+icon("x",14)+'</span>':"")+'</div>'; }
+  function chipHTML(kid,a){ return '<span class="as-chip" data-act="act-open" data-kid="'+kid.id+'" data-id="'+a.id+'" style="background:'+tint(kid.color,.15)+';color:'+kid.color+';cursor:pointer"><span style="font-variant-numeric:tabular-nums">'+esc(a.start)+'</span> '+esc(a.label)+'</span>'; }
+  function addBtn(kidId,d){ return '<button class="as-addcell" data-act="open-add" data-kid="'+kidId+'" data-dow="'+d+'">'+icon("plus",14)+'</button>'; }
+  function gridHTML(wd){ var tkNow=todayKey(), wk=curWeekKey();
+    var head='<th class="namecol"></th>'+DAYS.map(function(d,i){ var isT=todayKey(wd[i])===tkNow; return '<th class="'+(isT?"today-col":"")+'" style="'+(isT?"color:var(--primary)":"")+'"><div>'+dows()[d]+'</div><div style="font-size:10.5px;font-weight:600;color:'+(isT?"var(--primary)":"var(--muted)")+'">'+(wd[i].getMonth()+1)+'/'+wd[i].getDate()+'</div></th>'; }).join('');
+    var rows=data.kids.map(function(kid){ return '<tr><td class="namecol"><div class="as-row" style="gap:6px"><span class="as-dot" style="background:'+kid.color+';width:10px;height:10px"></span><span style="font-weight:700;font-size:13.5px">'+esc(kid.name)+'</span></div></td>'+DAYS.map(function(d,i){ var isT=todayKey(wd[i])===tkNow; var acts=actsFor(kid.id,d,wk); return '<td class="'+(isT?"today-col":"")+'"><div class="as-cell">'+acts.map(function(a){return chipHTML(kid,a);}).join('')+addBtn(kid.id,d)+'</div></td>'; }).join('')+'</tr>'; }).join('');
+    return '<div class="as-grid-scroll"><table class="as-grid"><thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>'; }
+  function listHTML(wd){ var tkNow=todayKey(), wk=curWeekKey();
+    return '<div class="as-daylist">'+DAYS.map(function(d,i){ var isT=todayKey(wd[i])===tkNow; var inner=data.kids.map(function(kid){ var acts=actsFor(kid.id,d,wk), chips=acts.map(function(a){return chipHTML(kid,a);}).join(''); return '<div class="as-daykid"><span class="as-dot" style="background:'+kid.color+';width:10px;height:10px;margin-top:6px"></span><span class="as-dayname">'+esc(kid.name)+'</span><div class="as-daychips">'+chips+addBtn(kid.id,d)+'</div></div>'; }).join(''); return '<div class="as-daycard '+(isT?"today":"")+'"><div class="as-dayhd">'+dowl()[d]+' <span class="dt">'+(wd[i].getMonth()+1)+'/'+wd[i].getDate()+'</span>'+(isT?' <span class="tag">'+t("today_tag")+'</span>':'')+'</div>'+inner+'</div>'; }).join('')+'</div>'; }
+  function classCardsHTML(){ return '<div class="as-clsgrid">'+data.classes.map(function(c){ var kids=(c.kidIds||[]).map(function(id){return data.kids.filter(function(k){return k.id===id;})[0];}).filter(Boolean); var dots=kids.length?kids.map(function(k){return '<span class="as-dot" style="background:'+k.color+';width:11px;height:11px"></span>';}).join(''):'<span class="as-dot" style="background:#9aa6a0;width:11px;height:11px"></span>'; var names=kids.length?'<span class="as-clskid">'+kids.map(function(k){return esc(k.name);}).join('·')+'</span>':''; var href=classMapHref(c); var mapLink=href?' <a class="as-maplink" data-act="maplink" href="'+esc(href)+'" target="_blank" rel="noopener">'+t("map")+' '+icon("ext",12)+'</a>':''; var locRow='<div class="as-clsrow"><span class="ico">'+icon("pin",15)+'</span><span class="lab">'+t("loc")+'</span><span class="val">'+esc(c.location||"—")+mapLink+'</span></div>'; var shuttleRow='<div class="as-clsrow"><span class="ico">'+icon("bus",15)+'</span><span class="lab">'+t("shuttle")+'</span><span class="val" style="font-weight:700;color:'+(c.shuttle?"var(--primary)":"var(--muted)")+'">'+(c.shuttle?t("yes"):t("no"))+'</span></div>'; var suppliesRow='<div class="as-clsrow"><span class="ico">'+icon("bag",15)+'</span><span class="lab">'+t("supplies")+'</span><span class="val">'+esc(c.supplies||"—")+'</span></div>'; var memo=(c.memo&&c.memo.trim())?'<div class="as-clsmemo">'+esc(c.memo)+'</div>':''; return '<div class="as-clscard" data-act="cls-edit" data-id="'+c.id+'"><div class="as-clshd"><span class="as-clsdots">'+dots+'</span><span class="as-clsname">'+esc(c.name||"—")+'</span>'+names+'<span class="as-spacer"></span><span class="as-clsedit">'+icon("edit",14)+'</span></div>'+locRow+shuttleRow+suppliesRow+memo+'</div>'; }).join('')+'</div>'; }
+
+  function calGridHTML(y,m,opts){
+    opts=opts||{};
+    var first=new Date(y,m,1), lead=(first.getDay()===0?6:first.getDay()-1), dim=new Date(y,m+1,0).getDate();
+    var head=DAYS.map(function(d){return '<div class="cal-h">'+dows()[d]+'</div>';}).join('');
+    var cells="";
+    for(var i=0;i<lead;i++) cells+='<div class="cal-c empty"></div>';
+    for(var day=1;day<=dim;day++){
+      var key=ymd(y,m,day), dow=new Date(y,m,day).getDay();
+      var r = opts.kidId ? kidRoutineRatio(opts.kidId,key,dow) : 0;
+      var col = opts.color || "#2E6F5E";
+      var style = (opts.kidId && r>0) ? 'background:'+shade(r,col)+';color:'+(r>0.5?"#fff":"var(--ink)")+';' : '';
+      var cls="cal-c"+(key===todayKey()?" today":"")+(opts.pick&&key===selectedDate?" sel":"");
+      var attr = opts.pick ? ' data-act="cal-pick" data-key="'+key+'"' : '';
+      cells+='<div class="'+cls+'" style="'+style+'"'+attr+'>'+day+'</div>';
+    }
+    return '<div class="cal-grid">'+head+cells+'</div>';
   }
 
-  // ── 화면 ──
-  function headerHTML() {
-    var d = new Date();
-    return '<header class="as-head"><div class="as-eyebrow">우리집 방과 후</div>' +
-      '<div class="as-today as-disp"><span>' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일</span>' +
-      '<span class="dow">' + DOW[d.getDay()] + '요일</span></div></header>';
+  function headerHTML(){
+    var eyebrow='<div class="as-eyebrow">'+esc(t("app_title"))+'</div>', big;
+    if(view==="week"){ var tl=termLabel(); big='<div class="as-today as-disp" data-act="open-term" style="cursor:pointer"><span>'+esc(tl.main)+'</span>'+(tl.badge?'<span class="dow">'+esc(tl.badge)+'</span>':'')+'<span style="margin-left:3px;align-self:center;display:inline-flex;color:#9aa6a0">'+icon("edit",15)+'</span></div>'; }
+    else if(view==="edit"){ big='<div class="as-today as-disp">'+esc(t("tab_edit"))+'</div>'; }
+    else { var d=parseKey(selectedDate); var tt=selectedDate!==todayKey()?'<button class="as-pill" data-act="to-today" style="height:26px;margin-left:4px">'+t("to_today")+'</button>':''; big='<div class="as-today as-disp" data-act="open-cal" style="cursor:pointer"><span>'+esc(dateLabelText(d))+'</span><span class="dow">'+esc(dowLabelText(d))+'</span><span style="margin-left:1px;align-self:center;display:inline-flex;color:#9aa6a0">'+icon("cal",15)+'</span>'+tt+'</div>'; }
+    return '<header class="as-head">'+eyebrow+big+'</header>';
   }
-  function todayHTML() {
-    if (!data.kids.length) return '<div class="as-card"><div class="as-empty">아직 등록된 아이가 없어요. 아래 ‘편집’에서 추가해 주세요.</div></div>';
-    var tk = todayKey(), td = todayDow();
-    return data.kids.map(function (kid) {
-      var acts = actsFor(kid.id, td);
-      var tasks = data.tasks[kid.id] || [];
-      var doneList = (data.done[kid.id] && data.done[kid.id][tk]) || [];
-      var doneCount = tasks.filter(function (t) { return doneList.indexOf(t.id) >= 0; }).length;
-      var pct = tasks.length ? doneCount / tasks.length : 0;
-      var allDone = tasks.length > 0 && doneCount === tasks.length;
-      return '<section class="as-card">' +
-        '<div class="as-kidrow"><span class="as-dot" style="background:' + kid.color + '"></span>' +
-        '<span class="as-kidname">' + esc(kid.name) + '</span><span class="as-spacer"></span>' +
-        (tasks.length ? '<span class="as-ring-wrap">' + ring(pct, kid.color) + doneCount + '/' + tasks.length + '</span>' : '') +
-        '</div>' +
-        (acts.length
-          ? '<div class="as-acts">' + acts.map(function (a) {
-              return '<span class="as-act" style="background:' + tint(kid.color, .14) + ';color:' + kid.color +
-                '"><span class="t">' + esc(a.time) + '</span> ' + esc(a.label) + '</span>';
-            }).join('') + '</div>'
-          : '<div class="as-empty">오늘은 방과 후 일정이 없어요 🌿</div>') +
-        '<div class="as-divider"></div><div class="as-sub">오늘 할 일</div>' +
-        (tasks.length === 0 ? '<div class="as-empty">‘편집’에서 매일 할 일을 추가해 보세요.</div>' : '') +
-        tasks.map(function (t) {
-          var on = doneList.indexOf(t.id) >= 0;
-          return '<div class="as-task ' + (on ? 'on' : '') + '" data-act="toggle" data-kid="' + kid.id + '" data-task="' + t.id +
-            '" role="checkbox" aria-checked="' + on + '" tabindex="0">' +
-            '<span class="as-box">' + (on ? icon('check', 15, '#fff', 3) : '') + '</span>' +
-            '<span class="as-label">' + esc(t.label) + '</span></div>';
-        }).join('') +
-        (allDone ? '<div class="as-celebrate">오늘 할 일 끝! 🎉</div>' : '') +
-        '</section>';
+  function todayHTML(){
+    if(!data.kids.length) return '<div class="as-card"><div class="as-empty">'+t("add_kid_first")+'</div></div>';
+    var tk=selectedDate, td=parseKey(selectedDate).getDay(), wk=mondayKey(parseKey(selectedDate));
+    return data.kids.map(function(kid){
+      var acts=actsFor(kid.id,td,wk);
+      var routines=routinesFor(kid.id,td);
+      var oneoffs=(data.oneoffs[kid.id]&&data.oneoffs[kid.id][tk])||[];
+      var doneList=(data.done[kid.id]&&data.done[kid.id][tk])||[];
+      var rDone=routines.filter(function(r){return doneList.indexOf(r.id)>=0;}).length, rTotal=routines.length, rPct=rTotal?rDone/rTotal:0;
+      var items=routines.concat(oneoffs);
+      var allDone=items.length>0 && items.filter(function(it){return doneList.indexOf(it.id)>=0;}).length===items.length;
+      return '<section class="as-card"><div class="as-kidrow"><span class="as-dot" style="background:'+kid.color+'"></span><span class="as-kidname">'+esc(kid.name)+'</span><span class="as-spacer"></span>'+avatarHTML(kid)+'</div>'+
+        (acts.length?'<div class="as-acts">'+acts.map(function(a){return '<span class="as-act" style="background:'+tint(kid.color,.14)+';color:'+kid.color+'"><span class="t">'+esc(a.start)+'</span> '+esc(a.label)+'</span>';}).join('')+'</div>':'<div class="as-empty">'+t("no_activities")+'</div>')+
+        '<div class="as-divider"></div><div class="as-rowhd"><div class="as-sub" style="margin:0">'+t("routines")+'</div>'+(rTotal?'<span class="as-ring-wrap">'+ring(rPct,kid.color)+rDone+'/'+rTotal+'</span>':'')+'</div>'+
+        (routines.length?routines.map(function(r){return taskRow(kid.id,r.id,r.label,doneList.indexOf(r.id)>=0,false);}).join(''):'<div class="as-empty">'+t("no_routines_today")+'</div>')+
+        '<div class="as-sub" style="margin-top:14px">'+t("today_todo")+'</div>'+
+        oneoffs.map(function(o){return taskRow(kid.id,o.id,o.label,doneList.indexOf(o.id)>=0,true);}).join('')+
+        '<div class="as-addbar"><input class="as-input" placeholder="'+esc(t("add_oneoff_ph"))+'" data-oneoffinput data-kid="'+kid.id+'" /><button class="as-btn primary" data-act="add-oneoff" data-kid="'+kid.id+'">'+icon("plus",16,"#fff")+'</button></div>'+
+        (allDone?'<div class="as-celebrate">'+t("all_done")+'</div>':'')+'</section>';
     }).join('');
   }
-  function weekHTML() {
-    var td = todayDow();
-    var head = '<th class="namecol"></th>' + DAYS.map(function (d) {
-      return '<th' + (d === td ? ' style="color:var(--primary)"' : '') + '>' + DOW[d] + '</th>';
+  function weekHTML(){
+    var wd=weekDates(weekOffset), layout=data.weekLayout==="list"?"list":"grid";
+    var arrows='<span style="display:inline-flex;gap:3px;margin-left:6px"><button class="as-arrowbtn" data-act="week-prev" aria-label="prev">'+icon("left",15)+'</button><button class="as-arrowbtn" data-act="week-next" aria-label="next">'+icon("right",15)+'</button></span>';
+    var titleline='<div class="as-sub" style="margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:2px">'+t("week_title")+' <span style="font-weight:600;color:var(--muted)">('+weekRangeText(weekOffset)+')</span>'+arrows+'</div>';
+    var seg='<div class="as-seg"><button class="as-seg-btn '+(layout==="grid"?"on":"")+'" data-act="week-layout" data-layout="grid">'+t("seg_table")+'</button><button class="as-seg-btn '+(layout==="list"?"on":"")+'" data-act="week-layout" data-layout="list">'+t("seg_byday")+'</button></div>';
+    var topbar='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px">'+titleline+seg+'</div>';
+    if(!data.kids.length) return '<div class="as-card">'+topbar+'<div class="as-empty">'+t("add_kid_first")+'</div></div>';
+    var tools='<div class="as-row" style="gap:8px;margin-bottom:12px"><button class="as-btn ghost" data-act="dl-image" style="padding:7px 12px;font-size:13px">'+icon("image",15)+' '+t("save_image")+'</button><button class="as-btn ghost" data-act="share" style="padding:7px 12px;font-size:13px">'+icon("share",15)+' '+t("share")+'</button></div>';
+    var content=layout==="list"?listHTML(wd):gridHTML(wd);
+    var hint='<div class="as-empty" style="padding:8px 2px 2px">'+t("add_hint")+'</div>';
+    var classHead='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px"><div style="font-size:12px;font-weight:700;letter-spacing:.03em"><span style="color:var(--ink)">'+t("classinfo_title")+'</span> <span style="color:var(--muted);font-weight:600">'+t("classinfo_sub")+'</span></div><button class="as-btn ghost" data-act="cls-add" style="padding:6px 11px;font-size:12.5px">'+icon("plus",14)+' '+t("add")+'</button></div>';
+    var classBody=(data.classes&&data.classes.length)?classCardsHTML():'<div class="as-clsempty">'+t("no_classes")+'</div>';
+    return '<div class="as-card">'+topbar+tools+content+hint+'<div class="as-divider" style="margin:16px 0 14px"></div>'+classHead+classBody+'</div>';
+  }
+  function editHTML(){
+    var langCard='<section class="as-card"><div class="as-sub" style="display:flex;align-items:center;gap:6px">'+icon("globe",15)+'<span>'+t("language")+'</span></div><div class="as-langgrid">'+
+      ["en","English","ko","한국어","zh","中文","ja","日本語"].reduce(function(acc,v,i,arr){ if(i%2===0) acc.push('<button class="as-langbtn '+(data.lang===arr[i]?"on":"")+'" data-act="set-lang" data-lang="'+arr[i]+'">'+arr[i+1]+'</button>'); return acc; },[]).join('')+'</div></section>';
+    var themeCard='<section class="as-card"><div class="as-sub" style="display:flex;align-items:center;gap:6px">'+icon("palette",15)+'<span>'+t("theme")+'</span></div>'+
+      '<div class="as-sub" style="font-weight:600;margin:8px 0 8px">'+t("palette")+'</div><div class="as-swatches">'+THEME_ORDER.map(function(key){return '<span class="as-sw '+(data.theme.color===key?"sel":"")+'" style="background:'+THEMES[key].p+'" data-act="set-theme" data-color="'+key+'"></span>';}).join('')+'</div></section>';
+    var kidsCards=data.kids.map(function(kid){ var routines=data.routines[kid.id]||[]; var open=!!kidExpanded[kid.id];
+      var header='<div class="as-row" style="gap:8px"><span class="as-dot" style="background:'+kid.color+'"></span><input class="as-input" style="font-weight:700" value="'+esc(kid.name)+'" data-kidname data-kid="'+kid.id+'" /><button class="as-iconbtn" data-act="kid-expand" data-kid="'+kid.id+'" aria-label="toggle">'+icon(open?"cup":"cdown",18)+'</button><button class="as-iconbtn danger" data-act="rm-kid" data-kid="'+kid.id+'" aria-label="'+t("del")+'">'+icon("trash",18)+'</button></div>';
+      var bodyInner = open ? ('<div style="margin-top:14px"><div class="as-sub">'+t("color")+'</div><div class="as-swatches" style="margin-bottom:16px">'+PALETTE.map(function(c){return '<span class="as-sw '+(kid.color===c?"sel":"")+'" style="background:'+c+'" data-act="color" data-kid="'+kid.id+'" data-color="'+c+'"></span>';}).join('')+'</div>'+
+        '<div class="as-sub">'+t("routine_section")+'</div>'+
+        routines.map(function(r){ return '<div style="margin-bottom:12px;padding-bottom:10px;border-bottom:1px dashed var(--line)"><div class="as-row"><input class="as-input" value="'+esc(r.label)+'" data-routinename data-kid="'+kid.id+'" data-rid="'+r.id+'" /><button class="as-iconbtn danger" data-act="rm-routine" data-kid="'+kid.id+'" data-rid="'+r.id+'" aria-label="'+t("del")+'">'+icon("trash",16)+'</button></div><div class="as-pills">'+DAYS.map(function(d){return '<span class="as-pill '+(r.days.indexOf(d)>=0?"on":"")+'" data-act="r-day" data-kid="'+kid.id+'" data-rid="'+r.id+'" data-d="'+d+'">'+dows()[d]+'</span>';}).join('')+'<button class="as-preset" data-act="r-preset" data-kid="'+kid.id+'" data-rid="'+r.id+'" data-preset="all">'+t("every")+'</button><button class="as-preset" data-act="r-preset" data-kid="'+kid.id+'" data-rid="'+r.id+'" data-preset="weekday">'+t("weekday")+'</button></div></div>'; }).join('')+
+        '<div class="as-addbar"><input class="as-input" placeholder="'+esc(t("routine_add_ph"))+'" data-routineinput data-kid="'+kid.id+'" /><button class="as-btn primary" data-act="add-routine" data-kid="'+kid.id+'">'+icon("plus",16,"#fff")+'</button></div></div>') : '';
+      return '<section class="as-card">'+header+bodyInner+'</section>';
     }).join('');
-    var body = data.kids.map(function (kid) {
-      return '<tr><td class="namecol"><div class="as-row" style="gap:6px">' +
-        '<span class="as-dot" style="background:' + kid.color + ';width:10px;height:10px"></span>' +
-        '<span style="font-weight:700;font-size:13.5px">' + esc(kid.name) + '</span></div></td>' +
-        DAYS.map(function (d) {
-          var acts = actsFor(kid.id, d);
-          return '<td class="' + (d === td ? 'today-col' : '') + '"><div class="as-cell">' +
-            acts.map(function (a) {
-              return '<span class="as-chip" style="background:' + tint(kid.color, .15) + ';color:' + kid.color +
-                '"><span style="font-variant-numeric:tabular-nums">' + esc(a.time) + '</span> ' + esc(a.label) +
-                '<span class="x" data-act="rm-act" data-kid="' + kid.id + '" data-dow="' + d + '" data-id="' + a.id + '">' + icon('x', 12) + '</span></span>';
-            }).join('') +
-            '<button class="as-addcell" data-act="open-add" data-kid="' + kid.id + '" data-dow="' + d + '">' + icon('plus', 14) + '</button>' +
-            '</div></td>';
-        }).join('') + '</tr>';
-    }).join('');
-    return '<div class="as-card"><div class="as-sub" style="margin-bottom:12px">주간 방과 후 시간표 · 칸을 눌러 일정을 추가하세요</div>' +
-      '<div class="as-grid-scroll"><table class="as-grid"><thead><tr>' + head + '</tr></thead><tbody>' + body + '</tbody></table></div>' +
-      (data.kids.length === 0 ? '<div class="as-empty">아이를 먼저 추가해 주세요.</div>' : '') + '</div>';
+    var now=new Date();
+    var achv = data.kids.length ? ('<div class="as-sub" style="margin:14px 2px 8px">'+t("achievement")+'</div>'+data.kids.map(function(kid){ var open=!!achvExpanded[kid.id];
+      return '<section class="as-card"><div class="as-row" style="gap:8px"><span class="as-dot" style="background:'+kid.color+'"></span><span class="as-kidname" style="flex:1">'+esc(kid.name)+'</span><span style="font-weight:800;color:'+kid.color+';font-size:20px">'+monthlyPct(kid.id)+'%</span><span style="color:var(--muted);font-size:11.5px;font-weight:700;margin-left:4px">'+t("this_month")+'</span><button class="as-iconbtn" data-act="achv-expand" data-kid="'+kid.id+'" aria-label="toggle">'+icon(open?"cup":"cdown",18)+'</button></div>'+(open?('<div class="as-empty" style="padding:8px 0">'+monthLabelText(now.getFullYear(),now.getMonth())+'</div><div class="cal-mini">'+calGridHTML(now.getFullYear(),now.getMonth(),{kidId:kid.id,color:kid.color})+'</div>'):'')+'</section>';
+    }).join('')) : '';
+    return '<div>'+langCard+themeCard+'<div class="as-sub" style="margin:4px 2px 8px">'+t("edit_children")+'</div>'+kidsCards+'<button class="as-btn ghost" style="width:100%;justify-content:center;padding:14px" data-act="add-kid">'+icon("plus",18)+' '+t("kid_add")+'</button>'+achv+'</div>';
   }
-  function editHTML() {
-    return '<div>' + data.kids.map(function (kid) {
-      var tasks = data.tasks[kid.id] || [];
-      return '<section class="as-card">' +
-        '<div class="as-row" style="margin-bottom:12px"><span class="as-dot" style="background:' + kid.color + '"></span>' +
-        '<input class="as-input" style="font-weight:700" value="' + esc(kid.name) + '" data-kidname data-kid="' + kid.id + '" />' +
-        '<button class="as-iconbtn" data-act="rm-kid" data-kid="' + kid.id + '" aria-label="아이 삭제">' + icon('trash', 18) + '</button></div>' +
-        '<div class="as-swatches" style="margin-bottom:14px">' + PALETTE.map(function (c) {
-          return '<span class="as-sw ' + (kid.color === c ? 'sel' : '') + '" style="background:' + c + '" data-act="color" data-kid="' + kid.id + '" data-color="' + c + '"></span>';
-        }).join('') + '</div>' +
-        '<div class="as-sub">매일 할 일</div>' +
-        tasks.map(function (t) {
-          return '<div class="as-row" style="padding:5px 0"><span style="flex:1;font-size:15px">' + esc(t.label) + '</span>' +
-            '<button class="as-iconbtn" data-act="rm-task" data-kid="' + kid.id + '" data-task="' + t.id + '" aria-label="할 일 삭제">' + icon('x', 16) + '</button></div>';
-        }).join('') +
-        '<div class="as-addbar"><input class="as-input" placeholder="할 일 추가 (예: 숙제하기)" data-taskinput data-kid="' + kid.id + '" />' +
-        '<button class="as-btn primary" data-act="add-task" data-kid="' + kid.id + '">' + icon('plus', 16, '#fff') + '</button></div>' +
-        '</section>';
-    }).join('') +
-      '<button class="as-btn ghost" style="width:100%;justify-content:center;padding:14px" data-act="add-kid">' + icon('plus', 18) + ' 아이 추가</button></div>';
+  function actEditorPopupHTML(){
+    if(!actEdit) return '';
+    var title = actEdit.id ? t("act_edit") : t("act_new");
+    return '<div class="as-pop" data-act="act-overlay"><div class="as-popcard"><div class="as-poptitle as-disp">'+title+'</div>'+
+      '<input class="as-input" id="act-label" placeholder="'+esc(t("act_label_ph"))+'" value="'+esc(actEdit.label||"")+'" style="margin-bottom:12px" />'+
+      '<div class="as-sub" style="display:flex;align-items:center;gap:6px">'+icon("repeat",14)+'<span>'+t("repeat")+'</span></div>'+
+      '<div class="as-pills" style="margin-bottom:4px">'+DAYS.map(function(d){return '<span class="as-pill '+(actEdit.days.indexOf(d)>=0?"on":"")+'" data-act="act-day" data-d="'+d+'">'+dows()[d]+'</span>';}).join('')+'<button class="as-preset" data-act="act-preset" data-preset="all">'+t("every")+'</button><button class="as-preset" data-act="act-preset" data-preset="weekday">'+t("weekday")+'</button></div>'+
+      (actEdit.id ? '<div class="as-sub">'+t("scope_label")+'</div><div class="as-seg" style="display:flex;width:100%;margin:0 0 14px"><button class="as-seg-btn '+(actEdit.scope!=="one"?"on":"")+'" data-act="act-scope" data-scope="following" style="flex:1">'+t("scope_following")+'</button><button class="as-seg-btn '+(actEdit.scope==="one"?"on":"")+'" data-act="act-scope" data-scope="one" style="flex:1">'+t("scope_one")+'</button></div>' : '<div class="as-empty" style="padding:2px 2px 12px;font-size:11.5px">'+t("act_from_note")+'</div>')+
+      '<div class="as-row" style="gap:12px;margin-bottom:16px"><div style="flex:1"><div class="as-sub">'+t("start_t")+'</div><input type="time" class="as-input" id="act-start" value="'+esc(actEdit.start||"15:30")+'" /></div><div style="flex:1"><div class="as-sub">'+t("end_t")+'</div><input type="time" class="as-input" id="act-end" value="'+esc(actEdit.end||"")+'" /></div></div>'+
+      '<div class="as-row" style="justify-content:flex-end"><button class="as-btn ghost" data-act="act-cancel">'+t("cancel")+'</button><button class="as-btn primary" data-act="act-save">'+t("save")+'</button></div></div></div>';
   }
-  function popupHTML() {
-    if (!adding) return '';
-    var kid = data.kids.filter(function (k) { return k.id === adding.kidId; })[0];
-    return '<div class="as-pop" data-act="overlay"><div class="as-popcard">' +
-      '<div class="as-poptitle as-disp">' + esc(kid ? kid.name : '') + ' · ' + DOW[adding.dow] + '요일 일정 추가</div>' +
-      '<div class="as-row" style="margin-bottom:10px"><input type="time" class="as-input" style="width:120px" id="add-time" value="15:30" />' +
-      '<input class="as-input" id="add-label" placeholder="예: 수영, 피아노" /></div>' +
-      '<div class="as-row" style="justify-content:flex-end"><button class="as-btn ghost" data-act="add-cancel">취소</button>' +
-      '<button class="as-btn primary" data-act="add-confirm">추가</button></div></div></div>';
+  function actDetailPopupHTML(){
+    if(!actView) return '';
+    var kid=data.kids.filter(function(k){return k.id===actView.kidId;})[0];
+    var a=findAct(actView.kidId,actView.id);
+    if(!a){ return ''; }
+    var timeTxt=esc(a.start)+(a.end?' – '+esc(a.end):'');
+    return '<div class="as-pop" data-act="actv-overlay"><div class="as-popcard"><div class="as-poptitle as-disp">'+esc(a.label||"—")+'</div>'+
+      (kid?'<div class="as-detail-row"><span class="ico"><span class="as-dot" style="background:'+kid.color+';width:13px;height:13px"></span></span><span class="v">'+esc(kid.name)+'</span></div>':'')+
+      '<div class="as-detail-row"><span class="ico">'+icon("repeat",16)+'</span><span class="v">'+esc(daysSummary(a.days))+'</span></div>'+
+      '<div class="as-detail-row"><span class="ico">'+icon("clock",16)+'</span><span class="v">'+timeTxt+'</span></div>'+
+      '<div class="as-row" style="justify-content:space-between;margin-top:16px"><button class="as-btn ghost" data-act="actv-delete" style="color:#c0392b">'+icon("trash",16)+' '+t("del")+'</button><div class="as-row"><button class="as-btn ghost" data-act="actv-close">'+t("close")+'</button><button class="as-btn primary" data-act="actv-edit">'+icon("edit",15,"#fff")+' '+t("edit_btn")+'</button></div></div></div></div>';
   }
-  function tabbarHTML() {
-    function tab(id, ico, label) {
-      return '<button class="as-tab ' + (view === id ? 'active' : '') + '" data-act="tab" data-view="' + id + '">' + icon(ico, 20) + ' ' + label + '</button>';
-    }
-    return '<nav class="as-tabbar">' + tab('today', 'sun', '오늘') + tab('week', 'cal', '시간표') + tab('edit', 'edit', '편집') + '</nav>';
+  function classPopupHTML(){
+    if(!classEdit) return '';
+    var ce=classEdit;
+    var kidDots=data.kids.map(function(k){return '<span class="as-sw '+(ce.kidIds.indexOf(k.id)>=0?"sel":"")+'" style="background:'+k.color+'" data-act="cls-kid" data-kid="'+k.id+'" title="'+esc(k.name)+'"></span>';}).join('');
+    return '<div class="as-pop" data-act="cls-overlay"><div class="as-popcard"><div class="as-poptitle as-disp">'+t("cls_title")+'</div>'+
+      '<input class="as-input" id="cls-name" placeholder="'+esc(t("cls_name_ph"))+'" value="'+esc(ce.name||"")+'" style="margin-bottom:12px" />'+
+      '<div class="as-sub" style="margin-bottom:6px">'+t("cls_who")+' <span style="font-weight:600;color:var(--muted)">'+t("cls_who_multi")+'</span></div>'+
+      '<div class="as-row" style="margin-bottom:12px;flex-wrap:wrap">'+(kidDots||'<span class="as-empty" style="padding:0">'+t("no_kid_first")+'</span>')+'</div>'+
+      '<input class="as-input" id="cls-loc" placeholder="'+esc(t("cls_loc_ph"))+'" value="'+esc(ce.location||"")+'" style="margin-bottom:8px" />'+
+      '<input class="as-input" id="cls-map" placeholder="'+esc(t("cls_map_ph"))+'" value="'+esc(ce.mapUrl||"")+'" style="margin-bottom:12px" />'+
+      '<div class="as-sub" style="margin-bottom:6px">'+t("cls_shuttle")+'</div><div class="as-seg" style="margin-bottom:12px"><button class="as-seg-btn '+(ce.shuttle?"on":"")+'" data-act="cls-shuttle" data-v="1">'+t("yes")+'</button><button class="as-seg-btn '+(!ce.shuttle?"on":"")+'" data-act="cls-shuttle" data-v="0">'+t("no")+'</button></div>'+
+      '<input class="as-input" id="cls-supplies" placeholder="'+esc(t("cls_supplies_ph"))+'" value="'+esc(ce.supplies||"")+'" style="margin-bottom:12px" />'+
+      '<div class="as-sub" style="margin-bottom:6px">'+t("cls_memo")+' <span style="font-weight:600;color:var(--muted)">'+t("cls_opt")+'</span></div>'+
+      '<textarea class="as-input" id="cls-memo" rows="2" placeholder="'+esc(t("cls_memo_ph"))+'" style="resize:vertical;margin-bottom:16px">'+esc(ce.memo||"")+'</textarea>'+
+      '<div class="as-row" style="justify-content:space-between">'+(ce.id?'<button class="as-btn ghost" data-act="cls-delete" data-id="'+ce.id+'" style="color:#c0392b">'+t("del")+'</button>':'<span></span>')+'<div class="as-row"><button class="as-btn ghost" data-act="cls-cancel">'+t("cancel")+'</button><button class="as-btn primary" data-act="cls-save">'+t("save")+'</button></div></div></div></div>';
   }
-  function render() {
-    var body = view === "today" ? todayHTML() : view === "week" ? weekHTML() : editHTML();
-    root.innerHTML = '<div class="as-root"><div class="as-wrap">' + headerHTML() + body + '</div>' + popupHTML() + tabbarHTML() + '</div>';
-    if (adding) { var el = document.getElementById("add-label"); if (el) el.focus(); }
+  function calPopupHTML(){
+    if(!cal) return '';
+    return '<div class="as-pop" data-act="cal-overlay"><div class="as-popcard"><div class="cal-nav"><button class="cal-navbtn" data-act="cal-prev">'+icon("left",18)+'</button><div class="cal-month">'+monthLabelText(cal.y,cal.m)+'</div><button class="cal-navbtn" data-act="cal-next">'+icon("right",18)+'</button></div>'+
+      calGridHTML(cal.y,cal.m,{pick:true})+
+      '<div class="as-row" style="justify-content:space-between;margin-top:14px"><button class="as-btn ghost" data-act="cal-today">'+t("to_today")+'</button><button class="as-btn primary" data-act="cal-close">'+t("close")+'</button></div></div></div>';
+  }
+  function termPopupHTML(){
+    if(!termEdit) return '';
+    var tm=data.term;
+    return '<div class="as-pop" data-act="term-overlay"><div class="as-popcard"><div class="as-poptitle as-disp">'+t("term_title")+'</div>'+
+      '<div class="as-sub">'+t("year")+'</div><input class="as-input" id="term-year" type="number" value="'+tm.year+'" style="margin-bottom:12px" />'+
+      '<div class="as-sub">'+t("term_word")+'</div><div class="as-seg" style="margin-bottom:12px">'+[1,2,3,4].map(function(n){return '<button class="as-seg-btn '+(tm.term===n?"on":"")+'" data-act="term-set" data-n="'+n+'">'+n+'</button>';}).join('')+'</div>'+
+      '<div class="as-sub">'+t("on_break")+'</div><div class="as-seg" style="margin-bottom:16px"><button class="as-seg-btn '+(tm.onBreak?"on":"")+'" data-act="term-break" data-v="1">'+t("yes")+'</button><button class="as-seg-btn '+(!tm.onBreak?"on":"")+'" data-act="term-break" data-v="0">'+t("no")+'</button></div>'+
+      '<div class="as-row" style="justify-content:flex-end"><button class="as-btn primary" data-act="term-close">'+t("close")+'</button></div></div></div>';
+  }
+  function tabbarHTML(){ function tab(id,ico,label){ return '<button class="as-tab '+(view===id?"active":"")+'" data-act="tab" data-view="'+id+'">'+icon(ico,20)+' '+label+'</button>'; } return '<nav class="as-tabbar">'+tab("today","sun",t("tab_today"))+tab("week","cal",t("tab_week"))+tab("edit","edit",t("tab_edit"))+'</nav>'; }
+  function render(){
+    var th=THEMES[data.theme.color]||THEMES.forest;
+    var body=view==="today"?todayHTML():view==="week"?weekHTML():editHTML();
+    root.innerHTML='<div class="as-root lang-'+data.lang+'" style="--primary:'+th.p+';--primary-soft:'+th.s+';--paper:'+th.bg+'"><div class="as-wrap">'+headerHTML()+body+'</div>'+actEditorPopupHTML()+actDetailPopupHTML()+classPopupHTML()+calPopupHTML()+termPopupHTML()+tabbarHTML()+'</div>';
+    if(actEdit){ var el=byId("act-label"); if(el&&!el.value) el.focus(); }
+    else if(classEdit){ var cn=byId("cls-name"); if(cn&&!cn.value) cn.focus(); }
   }
 
-  // ── 이벤트 (위임) ──
-  root.addEventListener("click", function (e) {
-    var el = e.target.closest("[data-act]");
-    if (!el) return;
-    var a = el.dataset.act;
-    if (a === "tab") { view = el.dataset.view; render(); }
-    else if (a === "toggle") { toggleTask(el.dataset.kid, el.dataset.task); }
-    else if (a === "open-add") { adding = { kidId: el.dataset.kid, dow: +el.dataset.dow }; render(); }
-    else if (a === "rm-act") { removeActivity(el.dataset.kid, +el.dataset.dow, el.dataset.id); }
-    else if (a === "overlay") { if (e.target === el) { adding = null; render(); } }
-    else if (a === "add-cancel") { adding = null; render(); }
-    else if (a === "add-confirm") { confirmAdd(); }
-    else if (a === "add-kid") { addKid(); }
-    else if (a === "rm-kid") { removeKid(el.dataset.kid); }
-    else if (a === "color") { updateKid(el.dataset.kid, { color: el.dataset.color }); }
-    else if (a === "rm-task") { removeTask(el.dataset.kid, el.dataset.task); }
-    else if (a === "add-task") {
-      var inp = document.querySelector('[data-taskinput][data-kid="' + el.dataset.kid + '"]');
-      addTask(el.dataset.kid, inp ? inp.value : "");
-    }
+  // ── 이벤트 ──
+  root.addEventListener("click", function(e){
+    var el=e.target.closest("[data-act]"); if(!el) return;
+    var a=el.dataset.act;
+    if(a==="maplink") return;
+    else if(a==="tab"){ view=el.dataset.view; render(); }
+    else if(a==="set-lang"){ data.lang=el.dataset.lang; save(); }
+    else if(a==="set-theme"){ data.theme.color=el.dataset.color; save(); }
+    else if(a==="photo"){ pickPhoto(el.dataset.kid); }
+    else if(a==="photo-rm"){ removePhoto(el.dataset.kid); }
+    else if(a==="week-layout"){ data.weekLayout=el.dataset.layout; save(); }
+    else if(a==="week-prev"){ weekOffset--; render(); }
+    else if(a==="week-next"){ weekOffset++; render(); }
+    else if(a==="dl-image"){ downloadImage(); }
+    else if(a==="share"){ shareSchedule(); }
+    else if(a==="to-today"){ selectedDate=todayKey(); render(); }
+    else if(a==="open-cal"){ var d=parseKey(selectedDate); cal={y:d.getFullYear(),m:d.getMonth()}; render(); }
+    else if(a==="cal-prev"){ cal.m--; if(cal.m<0){cal.m=11;cal.y--;} render(); }
+    else if(a==="cal-next"){ cal.m++; if(cal.m>11){cal.m=0;cal.y++;} render(); }
+    else if(a==="cal-pick"){ selectedDate=el.dataset.key; cal=null; render(); }
+    else if(a==="cal-today"){ selectedDate=todayKey(); cal=null; render(); }
+    else if(a==="cal-close"){ cal=null; render(); }
+    else if(a==="cal-overlay"){ if(e.target===el){ cal=null; render(); } }
+    else if(a==="open-term"){ termEdit=true; render(); }
+    else if(a==="term-set"){ data.term.term=+el.dataset.n; save(); }
+    else if(a==="term-break"){ data.term.onBreak=el.dataset.v==="1"; save(); }
+    else if(a==="term-close"){ termEdit=false; render(); }
+    else if(a==="term-overlay"){ if(e.target===el){ termEdit=false; render(); } }
+    else if(a==="kid-expand"){ kidExpanded[el.dataset.kid]=!kidExpanded[el.dataset.kid]; render(); }
+    else if(a==="achv-expand"){ achvExpanded[el.dataset.kid]=!achvExpanded[el.dataset.kid]; render(); }
+    else if(a==="toggle"){ toggleItem(el.dataset.kid, el.dataset.task); }
+    else if(a==="open-add"){ openActAdd(el.dataset.kid,+el.dataset.dow); }
+    else if(a==="act-open"){ openActView(el.dataset.kid,el.dataset.id); }
+    else if(a==="act-day"){ actToggleDay(+el.dataset.d); }
+    else if(a==="act-preset"){ actPreset(el.dataset.preset); }
+    else if(a==="act-scope"){ actSetScope(el.dataset.scope); }
+    else if(a==="act-save"){ saveAct(); }
+    else if(a==="act-cancel"){ actEdit=null; render(); }
+    else if(a==="act-overlay"){ if(e.target===el){ actEdit=null; render(); } }
+    else if(a==="actv-edit"){ openActEdit(actView.kidId,actView.id); }
+    else if(a==="actv-delete"){ removeActivity(actView.kidId,actView.id,actView.weekKey); actView=null; }
+    else if(a==="actv-close"){ actView=null; render(); }
+    else if(a==="actv-overlay"){ if(e.target===el){ actView=null; render(); } }
+    else if(a==="add-kid"){ addKid(); }
+    else if(a==="rm-kid"){ removeKid(el.dataset.kid); }
+    else if(a==="color"){ updateKid(el.dataset.kid,{color:el.dataset.color}); }
+    else if(a==="rm-routine"){ removeRoutine(el.dataset.kid,el.dataset.rid); }
+    else if(a==="r-day"){ toggleRoutineDay(el.dataset.kid,el.dataset.rid,+el.dataset.d); }
+    else if(a==="r-preset"){ presetRoutine(el.dataset.kid,el.dataset.rid,el.dataset.preset); }
+    else if(a==="add-routine"){ var ri=document.querySelector('[data-routineinput][data-kid="'+el.dataset.kid+'"]'); addRoutine(el.dataset.kid, ri?ri.value:""); }
+    else if(a==="add-oneoff"){ var oi=document.querySelector('[data-oneoffinput][data-kid="'+el.dataset.kid+'"]'); addOneoff(el.dataset.kid, oi?oi.value:""); }
+    else if(a==="rm-oneoff"){ removeOneoff(el.dataset.kid,el.dataset.id); }
+    else if(a==="cls-add"){ openClassAdd(); }
+    else if(a==="cls-edit"){ openClassEdit(el.dataset.id); }
+    else if(a==="cls-kid"){ classToggleKid(el.dataset.kid); }
+    else if(a==="cls-shuttle"){ classSetShuttle(el.dataset.v==="1"); }
+    else if(a==="cls-save"){ saveClass(); }
+    else if(a==="cls-delete"){ deleteClass(el.dataset.id); }
+    else if(a==="cls-cancel"){ classEdit=null; render(); }
+    else if(a==="cls-overlay"){ if(e.target===el){ classEdit=null; render(); } }
   });
-  root.addEventListener("input", function (e) {
-    var t = e.target;
-    if (t.matches && t.matches("[data-kidname]")) {
-      var id = t.dataset.kid;
-      for (var i = 0; i < data.kids.length; i++) if (data.kids[i].id === id) data.kids[i].name = t.value;
-      persist(); // 다시 그리지 않아 커서 유지
-    }
+  root.addEventListener("input", function(e){
+    var t2=e.target; if(!t2.matches) return;
+    if(t2.matches("[data-kidname]")){ var id=t2.dataset.kid; for(var i=0;i<data.kids.length;i++) if(data.kids[i].id===id) data.kids[i].name=t2.value; persist(); }
+    else if(t2.matches("[data-routinename]")){ updateRoutineName(t2.dataset.kid,t2.dataset.rid,t2.value); }
+    else if(t2.id==="term-year"){ var v=parseInt(t2.value,10); if(!isNaN(v)) data.term.year=v; persist(); }
+    else if(t2.id==="act-start"){ if(actEdit){ actEdit.start=t2.value; var ee=byId("act-end"); if(ee){ if(!ee.value || ee.value<=t2.value){ ee.value=addHour(t2.value); } actEdit.end=ee.value; } } }
+    else if(t2.id==="act-end"){ if(actEdit) actEdit.end=t2.value; }
   });
-  root.addEventListener("keydown", function (e) {
-    var t = e.target;
-    if (t.id === "add-label" && e.key === "Enter") { e.preventDefault(); confirmAdd(); }
-    else if (t.matches && t.matches("[data-taskinput]") && e.key === "Enter") { e.preventDefault(); addTask(t.dataset.kid, t.value); }
-    else if (t.matches && t.matches(".as-task") && (e.key === " " || e.key === "Enter")) { e.preventDefault(); toggleTask(t.dataset.kid, t.dataset.task); }
+  root.addEventListener("keydown", function(e){
+    var t2=e.target;
+    if(t2.id==="act-label"&&e.key==="Enter"){ e.preventDefault(); saveAct(); }
+    else if(t2.matches&&t2.matches("[data-routineinput]")&&e.key==="Enter"){ e.preventDefault(); addRoutine(t2.dataset.kid,t2.value); }
+    else if(t2.matches&&t2.matches("[data-oneoffinput]")&&e.key==="Enter"){ e.preventDefault(); addOneoff(t2.dataset.kid,t2.value); }
+    else if(t2.matches&&t2.matches(".as-task")&&(e.key===" "||e.key==="Enter")){ e.preventDefault(); toggleItem(t2.dataset.kid,t2.dataset.task); }
+    else if(t2.matches&&t2.matches(".as-avatar")&&(e.key===" "||e.key==="Enter")){ e.preventDefault(); pickPhoto(t2.dataset.kid); }
   });
 
   render();
