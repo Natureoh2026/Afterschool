@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
 <title>After-School</title>
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -13,7 +13,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Jua&family=Gothic+A1:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Kosugi+Maru&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;500;700&display=swap');
 * { box-sizing: border-box; }
-html, body { margin:0; padding:0; }
+html, body { margin:0; padding:0; background:#F4F6F3; overscroll-behavior:none; touch-action:pan-x pan-y; }
 .as-root {
   --paper:#F4F6F3; --card:#FFFFFF; --ink:#20302A; --muted:#6B7A72;
   --line:#E4E8E2; --primary:#2E6F5E; --primary-soft:#E7F1ED;
@@ -99,6 +99,7 @@ html, body { margin:0; padding:0; }
 .as-addcell:hover { color:var(--primary); border-color:var(--primary); }
 .as-clsgrid { display:grid; grid-template-columns:1fr; gap:10px; margin-top:4px; }
 @media (min-width:520px){ .as-clsgrid { grid-template-columns:1fr 1fr; } }
+.as-clsgrid.reordering { grid-template-columns:1fr !important; }
 .as-clscard { border:1px solid var(--line); border-radius:14px; padding:12px 13px; cursor:pointer; transition:border-color .15s; }
 .as-clscard:hover { border-color:var(--primary); }
 .as-clshd { display:flex; align-items:center; gap:7px; margin-bottom:8px; }
@@ -459,9 +460,9 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
     var grips=grid.querySelectorAll('[data-act="cls-drag"]');
     Array.prototype.forEach.call(grips, function(g){
       var dragCard=null;
-      g.onpointerdown=function(e){ e.preventDefault(); e.stopPropagation(); dragCard=g.closest('.as-clscard'); if(!dragCard) return; document.body.classList.add('as-dragging'); try{ g.setPointerCapture(e.pointerId); }catch(_){ } dragCard.style.opacity="0.55"; dragCard.style.boxShadow="0 8px 22px rgba(0,0,0,.16)"; };
-      g.onpointermove=function(e){ if(!dragCard) return; e.preventDefault(); var tp=document.elementFromPoint(e.clientX,e.clientY); var over=tp&&tp.closest?tp.closest('.as-clscard'):null; if(over&&over!==dragCard&&over.parentNode===grid){ var r=over.getBoundingClientRect(); if(e.clientY > r.top + r.height/2) grid.insertBefore(dragCard, over.nextSibling); else grid.insertBefore(dragCard, over); } };
-      g.onpointerup=g.onpointercancel=function(){ document.body.classList.remove('as-dragging'); if(!dragCard) return; var ids=Array.prototype.slice.call(grid.querySelectorAll('.as-clscard')).map(function(c){return c.getAttribute('data-cls-card');}); data.classes.sort(function(a,b){ return ids.indexOf(a.id)-ids.indexOf(b.id); }); dragCard.style.opacity=""; dragCard.style.boxShadow=""; dragCard=null; save(); };
+      g.onpointerdown=function(e){ e.preventDefault(); e.stopPropagation(); dragCard=g.closest('.as-clscard'); if(!dragCard) return; document.body.classList.add('as-dragging'); grid.classList.add('reordering'); try{ g.setPointerCapture(e.pointerId); }catch(_){ } dragCard.style.opacity="0.55"; dragCard.style.boxShadow="0 8px 22px rgba(0,0,0,.16)"; dragCard.style.position="relative"; dragCard.style.zIndex="5"; };
+      g.onpointermove=function(e){ if(!dragCard) return; e.preventDefault(); var cards=Array.prototype.slice.call(grid.querySelectorAll('.as-clscard')); var target=null; for(var i=0;i<cards.length;i++){ if(cards[i]===dragCard) continue; var r=cards[i].getBoundingClientRect(); if(e.clientY < r.top + r.height/2){ target=cards[i]; break; } } if(target){ if(dragCard.nextSibling!==target) grid.insertBefore(dragCard, target); } else if(grid.lastElementChild!==dragCard){ grid.appendChild(dragCard); } };
+      g.onpointerup=g.onpointercancel=function(){ document.body.classList.remove('as-dragging'); grid.classList.remove('reordering'); if(!dragCard) return; var ids=Array.prototype.slice.call(grid.querySelectorAll('.as-clscard')).map(function(c){return c.getAttribute('data-cls-card');}); data.classes.sort(function(a,b){ return ids.indexOf(a.id)-ids.indexOf(b.id); }); dragCard.style.opacity=""; dragCard.style.boxShadow=""; dragCard.style.position=""; dragCard.style.zIndex=""; dragCard=null; save(); };
     });
   }
   function setupRoutineReorder(){
@@ -897,6 +898,16 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
 
   render();
   buildAppIcon();
+
+  // 페이지 전체 핀치 줌 / 더블탭 줌 차단 (iOS 사파리 대응)
+  try{
+    document.addEventListener('gesturestart', function(e){ e.preventDefault(); }, {passive:false});
+    document.addEventListener('gesturechange', function(e){ e.preventDefault(); }, {passive:false});
+    document.addEventListener('gestureend', function(e){ e.preventDefault(); }, {passive:false});
+    document.addEventListener('touchmove', function(e){ if(e.touches && e.touches.length>1){ e.preventDefault(); } }, {passive:false});
+    var lastTouchEnd=0;
+    document.addEventListener('touchend', function(e){ var now=Date.now(); if(now-lastTouchEnd<=300){ e.preventDefault(); } lastTouchEnd=now; }, {passive:false});
+  }catch(_){ }
 })();
 </script>
 </body>
