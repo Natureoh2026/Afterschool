@@ -118,7 +118,7 @@ html, body { margin:0; padding:0; background:#F4F6F3; overscroll-behavior:none; 
 .as-clsempty { color:var(--muted); font-size:13px; padding:8px 2px; line-height:1.5; }
 .as-input { font-family:inherit; font-size:calc(14.5px * var(--fs)); padding:9px 11px; border:1px solid var(--line); border-radius:11px; background:#fff; color:var(--ink); width:100%; }
 .as-input:focus { outline:2px solid var(--primary-soft); border-color:var(--primary); }
-.as-btn { font-family:inherit; font-weight:700; font-size:calc(14px * var(--fs)); padding:9px 14px; border-radius:12px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:6px; }
+.as-btn { font-family:inherit; font-weight:700; font-size:calc(14px * var(--fs)); padding:9px 14px; border-radius:12px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
 .as-btn.primary { background:var(--primary); color:#fff; }
 .as-btn.ghost { background:#fff; border:1px solid var(--line); color:var(--ink); }
 .as-iconbtn { border:none; background:none; cursor:pointer; color:var(--muted); padding:6px; border-radius:8px; display:flex; }
@@ -701,8 +701,8 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
     var topbar='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px">'+titleline+controls+'</div>';
     if(!data.kids.length) return '<div class="as-card">'+topbar+'<div class="as-empty">'+t("add_kid_first")+'</div></div>';
     var wkAny=data.kids.some(function(k){ return (data.schedule[k.id]||[]).some(function(a){ return a.days&&a.days.length&&segActive(a,curWeekKey()); }); });
-    var clearBtn=wkAny?'<button class="as-btn ghost" data-act="bulk-del" style="padding:7px 12px;font-size:13px;color:#c0392b;margin-left:auto">'+icon("trash",15)+' '+t("clear_week")+'</button>':'';
-    var tools='<div class="as-row" style="gap:8px;margin-bottom:12px"><button class="as-btn ghost" data-act="dl-image" style="padding:7px 12px;font-size:13px">'+icon("image",15)+' '+t("save_image")+'</button><button class="as-btn ghost" data-act="share" style="padding:7px 12px;font-size:13px">'+icon("share",15)+' '+t("share")+'</button>'+clearBtn+'</div>';
+    var clearBtn=wkAny?'<button class="as-btn ghost" data-act="bulk-del" style="padding:6px 10px;font-size:12px;color:#c0392b">'+icon("trash",14)+' '+t("clear_week")+'</button>':'';
+    var tools='<div class="as-row" style="gap:6px;margin-bottom:12px;flex-wrap:wrap"><button class="as-btn ghost" data-act="dl-image" style="padding:6px 10px;font-size:12px">'+icon("image",14)+' '+t("save_image")+'</button><button class="as-btn ghost" data-act="share" style="padding:6px 10px;font-size:12px">'+icon("share",14)+' '+t("share")+'</button>'+clearBtn+'</div>';
     var content=layout==="list"?listHTML(wd):gridHTML(wd);
     var hint='<div class="as-empty" style="padding:8px 2px 2px">'+t("add_hint")+'</div>';
     var classHead='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px"><div style="font-size:12px;font-weight:700;letter-spacing:.03em"><span style="color:var(--ink)">'+t("classinfo_title")+'</span> <span style="color:var(--muted);font-weight:600">'+t("classinfo_sub")+'</span></div><button class="as-btn ghost" data-act="cls-add" style="padding:6px 11px;font-size:12.5px">'+icon("plus",14)+' '+t("add")+'</button></div>';
