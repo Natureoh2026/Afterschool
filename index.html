@@ -84,7 +84,10 @@ html, body { margin:0; padding:0; background:#F4F6F3; overscroll-behavior:none; 
 @media (max-width:560px){
   .as-grid { min-width:0; }
   .as-grid th, .as-grid td { padding:6px 3px; }
-  .as-grid th.namecol, .as-grid td.namecol { width:50px; }
+  .as-grid th.namecol, .as-grid td.namecol { width:44px; }
+  .as-grid td.namecol .as-row { gap:4px !important; }
+  .as-grid td.namecol .as-dot { width:8px !important; height:8px !important; flex:none; }
+  .as-grid td.namecol span:not(.as-dot) { font-size:11.5px !important; line-height:1.15; }
   .as-grid th { font-size:11px; }
   .as-grid-scroll { margin:0 -22px; padding:0 8px; }
   .as-gchip { padding:3px 2px; }
