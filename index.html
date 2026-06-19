@@ -130,6 +130,8 @@ html, body { margin:0; padding:0; }
 .as-pills { display:flex; gap:4px; flex-wrap:nowrap; align-items:center; margin:9px 0 2px; overflow-x:auto; scrollbar-width:none; }
 .as-pills::-webkit-scrollbar { display:none; }
 .as-pill { display:inline-flex; align-items:center; justify-content:center; min-width:25px; height:27px; padding:0 5px; border-radius:8px; border:1px solid var(--line); font-size:calc(11.5px * var(--fs)); font-weight:700; color:var(--muted); cursor:pointer; background:#fff; user-select:none; flex:none; }
+[data-act="cls-drag"],[data-act="kid-drag"],[data-act="routine-drag"] { -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; touch-action:none; }
+.as-dragging, .as-dragging * { -webkit-user-select:none !important; user-select:none !important; -webkit-touch-callout:none !important; cursor:grabbing !important; }
 .as-pill.on { background:var(--primary); border-color:var(--primary); color:#fff; }
 .as-preset { font-size:calc(10.5px * var(--fs)); font-weight:700; color:var(--primary); background:var(--primary-soft); border:none; border-radius:8px; padding:5px 7px; cursor:pointer; font-family:inherit; flex:none; white-space:nowrap; }
 .as-langgrid { display:flex; flex-wrap:wrap; gap:7px; }
@@ -204,7 +206,7 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
       scope_label:"Apply to", scope_one:"This week only", scope_following:"This & future",
       settings:"Settings", language:"Language", save_image:"Save image", share:"Share", copied:"Copied to clipboard", edit_children:"Children",
       to_today:"Today", brk:"Break", year:"Year", term_title:"Year & term", term_word:"Term", on_break:"On break",
-      achievement:"Routine tracker", this_month:"this month", close:"Close",
+      achievement:"Routine tracker", this_month:"this month", close:"Close", stat_weekday:"Weekdays", stat_all:"All",
       theme:"Theme", palette:"Color theme", text_size:"Text size", ts_sm:"Small", ts_md:"Medium", ts_lg:"Large", share_scope_q:"What to include?", scope_table_only:"Timetable only", scope_with_class:"Timetable + class info", add_home:"Add to Home Screen", add_home_title:"Add to Home Screen", add_home_ios:"iPhone (Safari): tap the Share button, then \u2018Add to Home Screen\u2019.", add_home_android:"Android (Chrome): tap the \u22ee menu, then \u2018Add to Home screen\u2019.", already_added:"It\u2019s already on your home screen.", reorder_hint:"Drag the \u2261 handle to reorder children.", del_scope_title:"Delete class", del_scope_q:"Which weeks should be removed?", share_app:"Share After-School", share_app_text:"Check out this After-School planner:", version:"Version" },
     ko: { dows:["일","월","화","수","목","금","토"], dowl:["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
       app_title:"우리집 방과 후", tab_today:"오늘", tab_week:"시간표", tab_edit:"편집",
@@ -226,7 +228,7 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
       scope_label:"적용 범위", scope_one:"이번 주만", scope_following:"이번 주부터 모두",
       settings:"설정", language:"언어", save_image:"이미지 저장", share:"공유", copied:"클립보드에 복사됨", edit_children:"아이별 설정",
       to_today:"오늘로", brk:"방학", year:"연도", term_title:"연도 · 학기", term_word:"학기", on_break:"방학 중",
-      achievement:"루틴 기록", this_month:"이번 달", close:"닫기",
+      achievement:"루틴 기록", this_month:"이번 달", close:"닫기", stat_weekday:"평일만", stat_all:"전체",
       theme:"테마", palette:"색상 테마", text_size:"글자 크기", ts_sm:"작게", ts_md:"보통", ts_lg:"크게", share_scope_q:"무엇을 포함할까요?", scope_table_only:"시간표만", scope_with_class:"시간표 + 수업 정보", add_home:"홈 화면에 추가", add_home_title:"홈 화면에 추가하기", add_home_ios:"아이폰(사파리): 아래 공유 버튼을 누른 뒤 \u2018홈 화면에 추가\u2019를 선택해요.", add_home_android:"안드로이드(크롬): 오른쪽 위 \u22ee 메뉴에서 \u2018홈 화면에 추가\u2019를 선택해요.", already_added:"이미 홈 화면에 추가되어 있어요.", reorder_hint:"≡ 손잡이를 끌어 아이 순서를 바꿔요.", del_scope_title:"일정 삭제", del_scope_q:"어느 범위를 삭제할까요?", share_app:"방과 후 공유하기", share_app_text:"우리 아이 방과 후 일정 앱이에요. 한번 써보세요:", version:"버전" },
     zh: { dows:["日","一","二","三","四","五","六"], dowl:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
       app_title:"放学后", tab_today:"今天", tab_week:"课表", tab_edit:"编辑",
@@ -248,7 +250,7 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
       scope_label:"应用范围", scope_one:"仅本周", scope_following:"本周及以后",
       settings:"设置", language:"语言", save_image:"保存图片", share:"分享", copied:"已复制到剪贴板", edit_children:"孩子设置",
       to_today:"回到今天", brk:"假期", year:"年份", term_title:"年份 · 学期", term_word:"学期", on_break:"假期中",
-      achievement:"日常打卡", this_month:"本月", close:"关闭",
+      achievement:"日常打卡", this_month:"本月", close:"关闭", stat_weekday:"仅工作日", stat_all:"全部",
       theme:"主题", palette:"配色", text_size:"字体大小", ts_sm:"小", ts_md:"中", ts_lg:"大", share_scope_q:"包含哪些内容？", scope_table_only:"仅课表", scope_with_class:"课表 + 课程信息", add_home:"添加到主屏幕", add_home_title:"添加到主屏幕", add_home_ios:"iPhone(Safari)：点击分享按钮，选择\u201c添加到主屏幕\u201d。", add_home_android:"Android(Chrome)：点击右上角 \u22ee 菜单，选择\u201c添加到主屏幕\u201d。", already_added:"已经在主屏幕上了。", reorder_hint:"拖动 ≡ 手柄可调整孩子顺序。", del_scope_title:"删除安排", del_scope_q:"删除哪些周？", share_app:"分享放学后", share_app_text:"推荐这个放学后日程应用：", version:"版本" },
     ja: { dows:["日","月","火","水","木","金","土"], dowl:["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
       app_title:"放課後", tab_today:"今日", tab_week:"時間割", tab_edit:"編集",
@@ -270,12 +272,12 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
       scope_label:"適用範囲", scope_one:"今週のみ", scope_following:"今週以降すべて",
       settings:"設定", language:"言語", save_image:"画像を保存", share:"共有", copied:"クリップボードにコピーしました", edit_children:"子どもの設定",
       to_today:"今日へ", brk:"休み", year:"年", term_title:"年 · 学期", term_word:"学期", on_break:"休み中",
-      achievement:"ルーティン記録", this_month:"今月", close:"閉じる",
+      achievement:"ルーティン記録", this_month:"今月", close:"閉じる", stat_weekday:"平日のみ", stat_all:"すべて",
       theme:"テーマ", palette:"カラー", text_size:"文字サイズ", ts_sm:"小", ts_md:"中", ts_lg:"大", share_scope_q:"何を含めますか？", scope_table_only:"時間割のみ", scope_with_class:"時間割 + 教室情報", add_home:"ホーム画面に追加", add_home_title:"ホーム画面に追加", add_home_ios:"iPhone（Safari）：共有ボタンから\u300cホーム画面に追加\u300dを選びます。", add_home_android:"Android（Chrome）：右上の \u22ee メニューから\u300cホーム画面に追加\u300dを選びます。", already_added:"すでにホーム画面にあります。", reorder_hint:"≡ をドラッグして子どもの順番を変更。", del_scope_title:"予定を削除", del_scope_q:"どの範囲を削除しますか？", share_app:"放課後を共有", share_app_text:"放課後の予定アプリです。どうぞ：", version:"バージョン" }
   };
 
   var SEED = {
-    lang:"en", weekLayout:"grid", textScale:"md", showWeekend:true, term:{ year:new Date().getFullYear(), term:1, onBreak:false }, theme:{ color:"forest" },
+    lang:"en", weekLayout:"grid", textScale:"md", showWeekend:true, statScope:"all", term:{ year:new Date().getFullYear(), term:1, onBreak:false }, theme:{ color:"forest" },
     kids: [ { id:"k1", name:"Child 1", color:"#F2A65A", photo:"" }, { id:"k2", name:"Child 2", color:"#6FA86B", photo:"" } ],
     schedule: {
       k1: [ {id:"a1",days:[1],start:"15:30",end:"16:30",label:"Swimming",from:null,until:null}, {id:"a2",days:[3],start:"16:00",end:"17:00",label:"Piano",from:null,until:null}, {id:"a3",days:[5],start:"15:30",end:"16:30",label:"Library",from:null,until:null} ],
@@ -382,6 +384,7 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
         p.classes=(p.classes||[]).map(function(c){ return {id:c.id,name:c.name||"",kidIds:c.kidIds||(c.kidId?[c.kidId]:[]),location:c.location||"",mapUrl:c.mapUrl||"",shuttle:!!c.shuttle,supplies:c.supplies||"",memo:c.memo||""}; });
         if(p.weekLayout!=="list"&&p.weekLayout!=="grid") p.weekLayout="grid";
         if(typeof p.showWeekend!=="boolean") p.showWeekend=true;
+        if(p.statScope!=="weekday"&&p.statScope!=="all") p.statScope="all";
         if(["sm","md","lg"].indexOf(p.textScale)<0) p.textScale="md";
         if(LANGS.indexOf(p.lang)<0) p.lang="ko";
         if(!p.term) p.term={year:new Date().getFullYear(),term:1,onBreak:false};
@@ -414,9 +417,9 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
   function findAct(kidId,id){ var a=data.schedule[kidId]||[]; for(var i=0;i<a.length;i++) if(a[i].id===id) return a[i]; return null; }
   function findRoutine(kidId,rid){ var a=data.routines[kidId]||[]; for(var i=0;i<a.length;i++) if(a[i].id===rid) return a[i]; return null; }
   function routinesFor(kidId,dow){ return (data.routines[kidId]||[]).filter(function(r){return r.days.indexOf(dow)>=0;}); }
-  function kidRoutineRatio(kidId,key,dow){ var rs=routinesFor(kidId,dow); if(!rs.length) return 0; var dl=(data.done[kidId]&&data.done[kidId][key])||[]; var done=rs.filter(function(r){return dl.indexOf(r.id)>=0;}).length; return done/rs.length; }
+  function kidRoutineRatio(kidId,key,dow){ if(data.statScope==="weekday"&&(dow===0||dow===6)) return 0; var rs=routinesFor(kidId,dow); if(!rs.length) return 0; var dl=(data.done[kidId]&&data.done[kidId][key])||[]; var done=rs.filter(function(r){return dl.indexOf(r.id)>=0;}).length; return done/rs.length; }
   function monthlyPct(kidId){ var now=new Date(), y=now.getFullYear(), m=now.getMonth(), dim=new Date(y,m+1,0).getDate(), tk=todayKey(), total=0, done=0;
-    for(var day=1;day<=dim;day++){ var key=ymd(y,m,day); if(key>tk) continue; var dow=new Date(y,m,day).getDay(); var rs=routinesFor(kidId,dow); var dl=(data.done[kidId]&&data.done[kidId][key])||[]; total+=rs.length; done+=rs.filter(function(r){return dl.indexOf(r.id)>=0;}).length; }
+    for(var day=1;day<=dim;day++){ var key=ymd(y,m,day); if(key>tk) continue; var dow=new Date(y,m,day).getDay(); if(data.statScope==="weekday"&&(dow===0||dow===6)) continue; var rs=routinesFor(kidId,dow); var dl=(data.done[kidId]&&data.done[kidId][key])||[]; total+=rs.length; done+=rs.filter(function(r){return dl.indexOf(r.id)>=0;}).length; }
     return total?Math.round(done/total*100):0; }
 
   // ── 액션 ──
@@ -446,9 +449,9 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
     var grips=list.querySelectorAll('[data-act="kid-drag"]');
     Array.prototype.forEach.call(grips, function(g){
       var dragCard=null;
-      g.onpointerdown=function(e){ e.preventDefault(); dragCard=g.closest('[data-kid-card]'); if(!dragCard) return; try{ g.setPointerCapture(e.pointerId); }catch(_){ } dragCard.style.opacity="0.55"; dragCard.style.boxShadow="0 8px 22px rgba(0,0,0,.16)"; dragCard.style.position="relative"; dragCard.style.zIndex="5"; };
-      g.onpointermove=function(e){ if(!dragCard) return; var cards=Array.prototype.slice.call(list.querySelectorAll('[data-kid-card]')); var target=null; for(var i=0;i<cards.length;i++){ if(cards[i]===dragCard) continue; var r=cards[i].getBoundingClientRect(); if(e.clientY < r.top + r.height/2){ target=cards[i]; break; } } if(target){ if(dragCard.nextSibling!==target) list.insertBefore(dragCard, target); } else if(list.lastElementChild!==dragCard){ list.appendChild(dragCard); } };
-      g.onpointerup=g.onpointercancel=function(){ if(!dragCard) return; var ids=Array.prototype.slice.call(list.querySelectorAll('[data-kid-card]')).map(function(c){return c.getAttribute('data-kid-card');}); data.kids.sort(function(a,b){ return ids.indexOf(a.id)-ids.indexOf(b.id); }); dragCard.style.opacity=""; dragCard.style.boxShadow=""; dragCard.style.position=""; dragCard.style.zIndex=""; dragCard=null; save(); };
+      g.onpointerdown=function(e){ e.preventDefault(); dragCard=g.closest('[data-kid-card]'); if(!dragCard) return; document.body.classList.add('as-dragging'); try{ g.setPointerCapture(e.pointerId); }catch(_){ } dragCard.style.opacity="0.55"; dragCard.style.boxShadow="0 8px 22px rgba(0,0,0,.16)"; dragCard.style.position="relative"; dragCard.style.zIndex="5"; };
+      g.onpointermove=function(e){ if(!dragCard) return; e.preventDefault(); var cards=Array.prototype.slice.call(list.querySelectorAll('[data-kid-card]')); var target=null; for(var i=0;i<cards.length;i++){ if(cards[i]===dragCard) continue; var r=cards[i].getBoundingClientRect(); if(e.clientY < r.top + r.height/2){ target=cards[i]; break; } } if(target){ if(dragCard.nextSibling!==target) list.insertBefore(dragCard, target); } else if(list.lastElementChild!==dragCard){ list.appendChild(dragCard); } };
+      g.onpointerup=g.onpointercancel=function(){ document.body.classList.remove('as-dragging'); if(!dragCard) return; var ids=Array.prototype.slice.call(list.querySelectorAll('[data-kid-card]')).map(function(c){return c.getAttribute('data-kid-card');}); data.kids.sort(function(a,b){ return ids.indexOf(a.id)-ids.indexOf(b.id); }); dragCard.style.opacity=""; dragCard.style.boxShadow=""; dragCard.style.position=""; dragCard.style.zIndex=""; dragCard=null; save(); };
     });
   }
   function setupClassReorder(){
@@ -456,18 +459,18 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
     var grips=grid.querySelectorAll('[data-act="cls-drag"]');
     Array.prototype.forEach.call(grips, function(g){
       var dragCard=null;
-      g.onpointerdown=function(e){ e.preventDefault(); e.stopPropagation(); dragCard=g.closest('.as-clscard'); if(!dragCard) return; try{ g.setPointerCapture(e.pointerId); }catch(_){ } dragCard.style.opacity="0.55"; dragCard.style.boxShadow="0 8px 22px rgba(0,0,0,.16)"; };
-      g.onpointermove=function(e){ if(!dragCard) return; var tp=document.elementFromPoint(e.clientX,e.clientY); var over=tp&&tp.closest?tp.closest('.as-clscard'):null; if(over&&over!==dragCard&&over.parentNode===grid){ var r=over.getBoundingClientRect(); if(e.clientY > r.top + r.height/2) grid.insertBefore(dragCard, over.nextSibling); else grid.insertBefore(dragCard, over); } };
-      g.onpointerup=g.onpointercancel=function(){ if(!dragCard) return; var ids=Array.prototype.slice.call(grid.querySelectorAll('.as-clscard')).map(function(c){return c.getAttribute('data-cls-card');}); data.classes.sort(function(a,b){ return ids.indexOf(a.id)-ids.indexOf(b.id); }); dragCard.style.opacity=""; dragCard.style.boxShadow=""; dragCard=null; save(); };
+      g.onpointerdown=function(e){ e.preventDefault(); e.stopPropagation(); dragCard=g.closest('.as-clscard'); if(!dragCard) return; document.body.classList.add('as-dragging'); try{ g.setPointerCapture(e.pointerId); }catch(_){ } dragCard.style.opacity="0.55"; dragCard.style.boxShadow="0 8px 22px rgba(0,0,0,.16)"; };
+      g.onpointermove=function(e){ if(!dragCard) return; e.preventDefault(); var tp=document.elementFromPoint(e.clientX,e.clientY); var over=tp&&tp.closest?tp.closest('.as-clscard'):null; if(over&&over!==dragCard&&over.parentNode===grid){ var r=over.getBoundingClientRect(); if(e.clientY > r.top + r.height/2) grid.insertBefore(dragCard, over.nextSibling); else grid.insertBefore(dragCard, over); } };
+      g.onpointerup=g.onpointercancel=function(){ document.body.classList.remove('as-dragging'); if(!dragCard) return; var ids=Array.prototype.slice.call(grid.querySelectorAll('.as-clscard')).map(function(c){return c.getAttribute('data-cls-card');}); data.classes.sort(function(a,b){ return ids.indexOf(a.id)-ids.indexOf(b.id); }); dragCard.style.opacity=""; dragCard.style.boxShadow=""; dragCard=null; save(); };
     });
   }
   function setupRoutineReorder(){
     var grips=root.querySelectorAll('[data-act="routine-drag"]');
     Array.prototype.forEach.call(grips, function(g){
       var dragRow=null, list=null;
-      g.onpointerdown=function(e){ e.preventDefault(); dragRow=g.closest('.routine-row'); list=g.closest('.routine-list'); if(!dragRow||!list) return; try{ g.setPointerCapture(e.pointerId); }catch(_){ } dragRow.style.opacity="0.55"; dragRow.style.background="var(--paper)"; };
-      g.onpointermove=function(e){ if(!dragRow||!list) return; var rows=Array.prototype.slice.call(list.querySelectorAll('.routine-row')); var target=null; for(var i=0;i<rows.length;i++){ if(rows[i]===dragRow) continue; var r=rows[i].getBoundingClientRect(); if(e.clientY < r.top + r.height/2){ target=rows[i]; break; } } if(target){ if(dragRow.nextSibling!==target) list.insertBefore(dragRow, target); } else if(list.lastElementChild!==dragRow){ list.appendChild(dragRow); } };
-      g.onpointerup=g.onpointercancel=function(){ if(!dragRow||!list) return; var kid=g.dataset.kid; var ids=Array.prototype.slice.call(list.querySelectorAll('.routine-row')).map(function(c){return c.getAttribute('data-routine-row');}); (data.routines[kid]||[]).sort(function(a,b){ return ids.indexOf(a.id)-ids.indexOf(b.id); }); dragRow.style.opacity=""; dragRow.style.background=""; dragRow=null; list=null; save(); };
+      g.onpointerdown=function(e){ e.preventDefault(); dragRow=g.closest('.routine-row'); list=g.closest('.routine-list'); if(!dragRow||!list) return; document.body.classList.add('as-dragging'); try{ g.setPointerCapture(e.pointerId); }catch(_){ } dragRow.style.opacity="0.55"; dragRow.style.background="var(--paper)"; };
+      g.onpointermove=function(e){ if(!dragRow||!list) return; e.preventDefault(); var rows=Array.prototype.slice.call(list.querySelectorAll('.routine-row')); var target=null; for(var i=0;i<rows.length;i++){ if(rows[i]===dragRow) continue; var r=rows[i].getBoundingClientRect(); if(e.clientY < r.top + r.height/2){ target=rows[i]; break; } } if(target){ if(dragRow.nextSibling!==target) list.insertBefore(dragRow, target); } else if(list.lastElementChild!==dragRow){ list.appendChild(dragRow); } };
+      g.onpointerup=g.onpointercancel=function(){ document.body.classList.remove('as-dragging'); if(!dragRow||!list) return; var kid=g.dataset.kid; var ids=Array.prototype.slice.call(list.querySelectorAll('.routine-row')).map(function(c){return c.getAttribute('data-routine-row');}); (data.routines[kid]||[]).sort(function(a,b){ return ids.indexOf(a.id)-ids.indexOf(b.id); }); dragRow.style.opacity=""; dragRow.style.background=""; dragRow=null; list=null; save(); };
     });
   }
   function setupCrop(){
@@ -560,9 +563,8 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
     ctx.textBaseline="top"; ctx.textAlign="left";
     ctx.fillStyle="#20302A"; ctx.font='700 26px "'+cd+'", sans-serif'; ctx.fillText(clipText(ctx,t("week_title")+" ("+weekRangeText(weekOffset)+")",W-padX*2), padX, padTop);
     ctx.fillStyle="#6B7A72"; ctx.font='600 15px "'+cf+'", sans-serif'; ctx.fillText(termLabel().main + (data.term.onBreak?"  ("+t("brk")+")":""), padX, padTop+38);
-    vd.forEach(function(d,i){ if(todayKey(wd[i])===tkNow){ ctx.fillStyle=th.s; ctx.fillRect(padX+nameW+dayW*i,gridTop,dayW,gridBottom-gridTop); } });
     ctx.textAlign="center";
-    vd.forEach(function(d,i){ var isT=todayKey(wd[i])===tkNow; ctx.textBaseline="top"; ctx.fillStyle=isT?th.p:"#6B7A72"; ctx.font='700 15px "'+cf+'", sans-serif'; ctx.fillText(dows()[d], padX+nameW+dayW*i+dayW/2, headerH+8); ctx.font='600 12px "'+cf+'", sans-serif'; ctx.fillStyle=isT?th.p:"#9aa6a0"; ctx.fillText((wd[i].getMonth()+1)+"/"+wd[i].getDate(), padX+nameW+dayW*i+dayW/2, headerH+28); });
+    vd.forEach(function(d,i){ ctx.textBaseline="top"; ctx.fillStyle="#6B7A72"; ctx.font='700 15px "'+cf+'", sans-serif'; ctx.fillText(dows()[d], padX+nameW+dayW*i+dayW/2, headerH+8); ctx.font='600 12px "'+cf+'", sans-serif'; ctx.fillStyle="#9aa6a0"; ctx.fillText((wd[i].getMonth()+1)+"/"+wd[i].getDate(), padX+nameW+dayW*i+dayW/2, headerH+28); });
     ctx.strokeStyle="#E4E8E2"; ctx.lineWidth=1;
     for(var i2=0;i2<=nDays;i2++){ var x=padX+nameW+dayW*i2; ctx.beginPath(); ctx.moveTo(x,gridTop); ctx.lineTo(x,gridBottom); ctx.stroke(); }
     ctx.beginPath(); ctx.moveTo(padX,gridTop); ctx.lineTo(W-padX,gridTop); ctx.stroke();
@@ -675,7 +677,7 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
       return '<section class="as-card" data-kid-card="'+kid.id+'">'+header+bodyInner+'</section>';
     }).join('');
     var now=new Date();
-    var achv = data.kids.length ? ('<div class="as-sub" style="margin:14px 2px 8px">'+t("achievement")+'</div>'+data.kids.map(function(kid){ var open=!!achvExpanded[kid.id];
+    var achv = data.kids.length ? ('<div class="as-row" style="margin:14px 2px 8px;gap:8px;align-items:center"><div class="as-sub" style="margin:0;flex:1">'+t("achievement")+'</div><div class="as-seg"><button class="as-seg-btn '+(data.statScope==="weekday"?"on":"")+'" data-act="stat-scope" data-scope="weekday">'+t("stat_weekday")+'</button><button class="as-seg-btn '+(data.statScope!=="weekday"?"on":"")+'" data-act="stat-scope" data-scope="all">'+t("stat_all")+'</button></div></div>'+data.kids.map(function(kid){ var open=!!achvExpanded[kid.id];
       return '<section class="as-card"><div class="as-row" style="gap:8px"><span class="as-dot" style="background:'+kid.color+'"></span><span class="as-kidname" style="flex:1;font-size:16px">'+esc(kid.name)+'</span><span style="font-weight:800;color:'+kid.color+';font-size:20px">'+monthlyPct(kid.id)+'%</span><span style="color:var(--muted);font-size:11.5px;font-weight:700;margin-left:4px">'+t("this_month")+'</span><button class="as-iconbtn" data-act="achv-expand" data-kid="'+kid.id+'" aria-label="toggle">'+icon(open?"cup":"cdown",18)+'</button></div>'+(open?('<div class="as-empty" style="padding:8px 0">'+monthLabelText(now.getFullYear(),now.getMonth())+'</div><div class="cal-mini">'+calGridHTML(now.getFullYear(),now.getMonth(),{kidId:kid.id,color:kid.color})+'</div>'):'')+'</section>';
     }).join('')) : '';
     return '<div>'+langCard+themeCard+textCard+'<div class="as-sub" style="margin:4px 2px 8px">'+t("edit_children")+'</div><div class="as-empty" style="padding:0 2px 8px;font-size:11.5px">'+t("reorder_hint")+'</div><div id="kid-list">'+kidsCards+'</div><button class="as-btn ghost" style="width:100%;justify-content:center;padding:14px" data-act="add-kid">'+icon("plus",18)+' '+t("kid_add")+'</button>'+achv+'<div style="text-align:center;margin:20px 0 4px"><button class="as-btn ghost" data-act="share-app" style="padding:8px 14px;font-size:13px">'+icon("share",15)+' '+t("share_app")+'</button><div style="color:var(--muted);font-size:11px;font-weight:600;margin-top:10px">'+t("version")+' '+BUILD+'</div></div></div>';
@@ -821,6 +823,7 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
     else if(a==="term-overlay"){ if(e.target===el){ termEdit=false; render(); } }
     else if(a==="kid-expand"){ kidExpanded[el.dataset.kid]=!kidExpanded[el.dataset.kid]; render(); }
     else if(a==="achv-expand"){ achvExpanded[el.dataset.kid]=!achvExpanded[el.dataset.kid]; render(); }
+    else if(a==="stat-scope"){ data.statScope=el.dataset.scope; save(); }
     else if(a==="toggle"){ toggleItem(el.dataset.kid, el.dataset.task); }
     else if(a==="open-add"){ openActAdd(el.dataset.kid,+el.dataset.dow); }
     else if(a==="act-open"){ openActView(el.dataset.kid,el.dataset.id); }
