@@ -11,7 +11,7 @@
 <meta name="theme-color" content="#2E6F5E" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232E6F5E'/%3E%3Ccircle cx='50' cy='50' r='17' fill='none' stroke='white' stroke-width='8'/%3E%3Cpath d='M50 17v9M50 74v9M17 50h9M74 50h9' stroke='white' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E" />
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Jua&family=Gothic+A1:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Kosugi+Maru&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Gothic+A1:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&family=Zen+Maru+Gothic:wght@400;500;700&family=Mochiy+Pop+One&display=swap');
 * { box-sizing: border-box; }
 html, body { margin:0; padding:0; background:#F4F6F3; overscroll-behavior:none; touch-action:pan-x pan-y; }
 .as-root {
@@ -24,8 +24,9 @@ html, body { margin:0; padding:0; background:#F4F6F3; overscroll-behavior:none; 
 }
 .as-root.lang-en { --font-body:'Nunito', system-ui, sans-serif; --font-disp:'Fredoka', system-ui, sans-serif; }
 .as-root.lang-ko { --font-body:'Gothic A1', system-ui, sans-serif; --font-disp:'Jua', system-ui, sans-serif; }
-.as-root.lang-ja { --font-body:'Kosugi Maru', system-ui, sans-serif; --font-disp:'Kosugi Maru', system-ui, sans-serif; }
-.as-root.lang-zh { --font-body:'Noto Sans SC', system-ui, sans-serif; --font-disp:'ZCOOL KuaiLe', system-ui, sans-serif; }
+.as-root.lang-ja { --font-body:'Zen Maru Gothic', system-ui, sans-serif; --font-disp:'Mochiy Pop One', system-ui, sans-serif; }
+.as-root.lang-zh { --font-body:'Noto Sans SC', system-ui, sans-serif; --font-disp:'Noto Serif SC', serif; }
+.as-root.lang-zh .as-disp, .as-root.lang-zh .as-kidname, .as-root.lang-zh .as-dayhd, .as-root.lang-zh .as-clsname, .as-root.lang-zh .cal-month, .as-root.lang-zh .as-poptitle { font-weight:600; }
 .as-scroll { flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; }
 .as-wrap { max-width:760px; margin:0 auto; padding:max(30px, calc(env(safe-area-inset-top) + 14px)) 22px 28px; }
 .as-disp { font-family:var(--font-disp); font-weight:400; }
@@ -589,8 +590,8 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
   function clipText(ctx,txt,maxW){ if(ctx.measureText(txt).width<=maxW) return txt; var s=txt; while(s.length>1&&ctx.measureText(s+"…").width>maxW) s=s.slice(0,-1); return s+"…"; }
   function wrapCanvas(ctx,text,maxW){ var words=String(text).split(/(\s+)/), lines=[], cur=""; function flush(){ if(cur!=="") lines.push(cur); cur=""; } for(var i=0;i<words.length;i++){ var w=words[i]; if(ctx.measureText(cur+w).width<=maxW){ cur+=w; } else if(ctx.measureText(w).width>maxW){ for(var j=0;j<w.length;j++){ var ch=w[j]; if(ctx.measureText(cur+ch).width<=maxW) cur+=ch; else { flush(); cur=ch; } } } else { flush(); cur=w.replace(/^\s+/,""); } } flush(); return lines.length?lines:[""]; }
   function imgFilename(){ return "schedule_"+todayKey()+".png"; }
-  function canvasFont(){ var l=data.lang; return l==="en"?"Nunito":l==="ja"?"Kosugi Maru":l==="zh"?"Noto Sans SC":"Gothic A1"; }
-  function canvasDisp(){ var l=data.lang; return l==="en"?"Fredoka":l==="ja"?"Kosugi Maru":l==="zh"?"ZCOOL KuaiLe":"Jua"; }
+  function canvasFont(){ var l=data.lang; return l==="en"?"Nunito":l==="ja"?"Zen Maru Gothic":l==="zh"?"Noto Sans SC":"Gothic A1"; }
+  function canvasDisp(){ var l=data.lang; return l==="en"?"Fredoka":l==="ja"?"Mochiy Pop One":l==="zh"?"Noto Serif SC":"Jua"; }
   function buildScheduleCanvas(withClasses){
     var cf=canvasFont(), cd=canvasDisp(), vd=visDays(), mon=weekMonday(weekOffset), tkNow=todayKey(), th=THEMES[data.theme.color]||THEMES.forest, wk=curWeekKey();
     var wd=vd.map(function(d){return dowDate(mon,d);});
