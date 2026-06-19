@@ -20,13 +20,14 @@ html, body { margin:0; padding:0; background:#F4F6F3; overscroll-behavior:none; 
   --font-body:'Nunito', system-ui, sans-serif; --font-disp:'Fredoka', system-ui, sans-serif; --fs:1;
   font-family:var(--font-body);
   color:var(--ink); background:var(--paper);
-  min-height:100vh; -webkit-font-smoothing:antialiased;
+  height:100vh; height:100dvh; display:flex; flex-direction:column; -webkit-font-smoothing:antialiased;
 }
 .as-root.lang-en { --font-body:'Nunito', system-ui, sans-serif; --font-disp:'Fredoka', system-ui, sans-serif; }
 .as-root.lang-ko { --font-body:'Gothic A1', system-ui, sans-serif; --font-disp:'Jua', system-ui, sans-serif; }
 .as-root.lang-ja { --font-body:'Kosugi Maru', system-ui, sans-serif; --font-disp:'Kosugi Maru', system-ui, sans-serif; }
 .as-root.lang-zh { --font-body:'Noto Sans SC', system-ui, sans-serif; --font-disp:'ZCOOL KuaiLe', system-ui, sans-serif; }
-.as-wrap { max-width:760px; margin:0 auto; padding:max(30px, calc(env(safe-area-inset-top) + 14px)) 22px calc(130px + env(safe-area-inset-bottom)); }
+.as-scroll { flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; }
+.as-wrap { max-width:760px; margin:0 auto; padding:max(30px, calc(env(safe-area-inset-top) + 14px)) 22px 28px; }
 .as-disp { font-family:var(--font-disp); font-weight:400; }
 .as-head { margin:6px 2px 18px; }
 .as-eyebrow { color:var(--muted); font-size:calc(13px * var(--fs)); font-weight:600; letter-spacing:.02em; }
@@ -66,8 +67,7 @@ html, body { margin:0; padding:0; background:#F4F6F3; overscroll-behavior:none; 
 .as-oneoff-x { display:flex; color:var(--muted); cursor:pointer; padding:3px; border-radius:6px; }
 .as-oneoff-x:hover { color:#c0392b; }
 .as-celebrate { margin-top:6px; color:var(--primary); font-weight:700; font-size:14px; }
-.as-tabbar { position:fixed; left:0; right:0; bottom:0; background:rgba(255,255,255,.92);
-  backdrop-filter:blur(8px); border-top:1px solid var(--line); display:flex; justify-content:center; gap:6px;
+.as-tabbar { flex:none; background:#fff; border-top:1px solid var(--line); display:flex; justify-content:center; gap:6px;
   padding:8px 8px calc(8px + env(safe-area-inset-bottom)); z-index:20; }
 .as-tab { flex:1; max-width:160px; display:flex; flex-direction:column; align-items:center; gap:3px;
   padding:8px 4px; border:none; background:none; color:var(--muted); font-family:inherit; font-size:calc(11.5px * var(--fs)); font-weight:700; cursor:pointer; border-radius:12px; }
@@ -444,9 +444,15 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
     try{
       persist();
       var payload={ app:"afterschool", v:1, exportedAt:new Date().toISOString(), data:data };
-      var blob=new Blob([JSON.stringify(payload)], {type:"application/json"});
-      var url=URL.createObjectURL(blob);
+      var json=JSON.stringify(payload);
       var d=new Date(), fn="afterschool-backup-"+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+".json";
+      var file=null; try{ file=new File([json],fn,{type:"application/json"}); }catch(e){}
+      if(file && navigator.canShare && navigator.canShare({files:[file]})){
+        navigator.share({files:[file],title:t("backup_title")}).then(function(){ toast(t("backup_done")); }).catch(function(){});
+        return;
+      }
+      var blob=new Blob([json],{type:"application/json"});
+      var url=URL.createObjectURL(blob);
       var a=document.createElement("a"); a.href=url; a.download=fn; document.body.appendChild(a); a.click();
       setTimeout(function(){ try{ document.body.removeChild(a); }catch(_){} URL.revokeObjectURL(url); }, 200);
       toast(t("backup_done"));
@@ -819,7 +825,9 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
     var th=THEMES[data.theme.color]||THEMES.forest;
     var fs={sm:0.9,md:1,lg:1.15}[data.textScale]||1;
     var body=view==="today"?todayHTML():view==="week"?weekHTML():editHTML();
-    root.innerHTML='<div class="as-root lang-'+data.lang+'" style="--primary:'+th.p+';--primary-soft:'+th.s+';--paper:'+th.bg+';--fs:'+fs+'"><div class="as-wrap">'+headerHTML()+body+'</div>'+actEditorPopupHTML()+actDetailPopupHTML()+cropPopupHTML()+classPopupHTML()+calPopupHTML()+termPopupHTML()+delScopePopupHTML()+shareChoicePopupHTML()+tabbarHTML()+'</div>';
+    var sc=root.querySelector(".as-scroll"); var prevTop=sc?sc.scrollTop:0; var sameView=(render._lastView===view);
+    root.innerHTML='<div class="as-root lang-'+data.lang+'" style="--primary:'+th.p+';--primary-soft:'+th.s+';--paper:'+th.bg+';--fs:'+fs+'"><div class="as-scroll"><div class="as-wrap">'+headerHTML()+body+'</div></div>'+actEditorPopupHTML()+actDetailPopupHTML()+cropPopupHTML()+classPopupHTML()+calPopupHTML()+termPopupHTML()+delScopePopupHTML()+shareChoicePopupHTML()+tabbarHTML()+'</div>';
+    var nsc=root.querySelector(".as-scroll"); if(nsc) nsc.scrollTop=sameView?prevTop:0; render._lastView=view;
     if(actEdit){ var el=byId("act-label"); if(el&&!el.value) el.focus(); }
     else if(classEdit){ var cn=byId("cls-name"); if(cn&&!cn.value) cn.focus(); }
     if(cropState) setupCrop();
