@@ -82,12 +82,13 @@ html, body { margin:0; padding:0; background:#F4F6F3; overscroll-behavior:none; 
 .as-grid th { font-size:12.5px; color:var(--muted); font-weight:700; text-align:center; }
 .as-grid th.namecol, .as-grid td.namecol { text-align:left; width:78px; position:sticky; left:0; background:var(--paper); }
 .as-grid td.today-col, .as-grid th.today-col { background:var(--primary-soft); }
-.as-grid td.namecol .as-knm { font-weight:700; font-size:13.5px; line-height:1.15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
+.as-grid td.namecol .as-knmwrap { display:flex; flex-direction:column; align-items:center; gap:5px; }
+.as-grid td.namecol .as-knm { font-weight:700; font-size:13.5px; line-height:1.15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; max-width:100%; }
 @media (max-width:560px){
   .as-grid { min-width:0; }
   .as-grid th, .as-grid td { padding:6px 3px; }
-  .as-grid th.namecol, .as-grid td.namecol { width:50px; }
-  .as-grid td.namecol .as-row { gap:4px !important; }
+  .as-grid th.namecol, .as-grid td.namecol { width:56px; }
+  .as-grid td.namecol .as-knmwrap { gap:4px !important; }
   .as-grid td.namecol .as-dot { width:8px !important; height:8px !important; flex:none; }
   .as-grid td.namecol .as-knm { font-size:10.5px; }
   .as-grid th { font-size:11px; }
@@ -697,7 +698,7 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
   function addBtn(kidId,d){ return '<button class="as-addcell" data-act="open-add" data-kid="'+kidId+'" data-dow="'+d+'">'+icon("plus",14)+'</button>'; }
   function gridHTML(wd){ var tkNow=todayKey(), wk=curWeekKey(), vd=visDays(), mon=weekMonday(weekOffset);
     var head='<th class="namecol"></th>'+vd.map(function(d){ var dt=dowDate(mon,d), isT=todayKey(dt)===tkNow; return '<th class="'+(isT?"today-col":"")+'" style="'+(isT?"color:var(--primary)":"")+'"><div>'+dows()[d]+'</div><div style="font-size:10.5px;font-weight:600;color:'+(isT?"var(--primary)":"var(--muted)")+'">'+(dt.getMonth()+1)+'/'+dt.getDate()+'</div></th>'; }).join('');
-    var rows=data.kids.map(function(kid){ return '<tr><td class="namecol"><div class="as-row" style="gap:6px"><span class="as-dot" style="background:'+kid.color+';width:10px;height:10px"></span><span class="as-knm">'+esc(kid.name)+'</span></div></td>'+vd.map(function(d){ var dt=dowDate(mon,d), isT=todayKey(dt)===tkNow; var acts=actsFor(kid.id,d,wk); return '<td class="'+(isT?"today-col":"")+'"><div class="as-cell">'+acts.map(function(a){return gridChipHTML(kid,a);}).join('')+addBtn(kid.id,d)+'</div></td>'; }).join('')+'</tr>'; }).join('');
+    var rows=data.kids.map(function(kid){ return '<tr><td class="namecol"><div class="as-knmwrap"><span class="as-dot" style="background:'+kid.color+';width:10px;height:10px"></span><span class="as-knm">'+esc(kid.name)+'</span></div></td>'+vd.map(function(d){ var dt=dowDate(mon,d), isT=todayKey(dt)===tkNow; var acts=actsFor(kid.id,d,wk); return '<td class="'+(isT?"today-col":"")+'"><div class="as-cell">'+acts.map(function(a){return gridChipHTML(kid,a);}).join('')+addBtn(kid.id,d)+'</div></td>'; }).join('')+'</tr>'; }).join('');
     return '<div class="as-grid-scroll"><table class="as-grid"><thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>'; }
   function listHTML(wd){ var tkNow=todayKey(), wk=curWeekKey(), vd=visDays(), mon=weekMonday(weekOffset);
     return '<div class="as-daylist">'+vd.map(function(d){ var dt=dowDate(mon,d), isT=todayKey(dt)===tkNow; var inner=data.kids.map(function(kid){ var acts=actsFor(kid.id,d,wk), chips=acts.map(function(a){return chipHTML(kid,a);}).join(''); return '<div class="as-daykid"><span class="as-dot" style="background:'+kid.color+';width:10px;height:10px;margin-top:6px"></span><span class="as-dayname">'+esc(kid.name)+'</span><div class="as-daychips">'+chips+addBtn(kid.id,d)+'</div></div>'; }).join(''); return '<div class="as-daycard '+(isT?"today":"")+'"><div class="as-dayhd">'+dowl()[d]+' <span class="dt">'+(dt.getMonth()+1)+'/'+dt.getDate()+'</span>'+(isT?' <span class="tag">'+t("today_tag")+'</span>':'')+'</div>'+inner+'</div>'; }).join('')+'</div>'; }
