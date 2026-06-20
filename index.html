@@ -10,8 +10,17 @@
 <meta name="apple-mobile-web-app-title" content="After-School" />
 <meta name="theme-color" content="#2E6F5E" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232E6F5E'/%3E%3Ccircle cx='50' cy='50' r='17' fill='none' stroke='white' stroke-width='8'/%3E%3Cpath d='M50 17v9M50 74v9M17 50h9M74 50h9' stroke='white' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E" />
+<!-- PWA: 홈 화면 추가 / 앱 등록용 -->
+<link rel="manifest" href="./manifest.json" />
+<link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png" />
+<!-- 폰트: 렌더링을 막지 않도록 비차단 로드(실패/오프라인 시 system-ui로 자동 대체) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gothic+A1:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&family=Zen+Maru+Gothic:wght@400;500;700&family=Mochiy+Pop+One&display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gothic+A1:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&family=Zen+Maru+Gothic:wght@400;500;700&family=Mochiy+Pop+One&display=swap" /></noscript>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Jua&family=Gothic+A1:wght@400;500;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&family=Zen+Maru+Gothic:wght@400;500;700&family=Mochiy+Pop+One&display=swap');
 * { box-sizing: border-box; }
 html, body { margin:0; padding:0; background:#F4F6F3; overscroll-behavior:none; touch-action:pan-x pan-y; }
 .as-root {
@@ -1086,6 +1095,13 @@ button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--primary
     var lastTouchEnd=0;
     document.addEventListener('touchend', function(e){ var now=Date.now(); if(now-lastTouchEnd<=300){ e.preventDefault(); } lastTouchEnd=now; }, {passive:false});
   }catch(_){ }
+
+  // ── PWA: 서비스워커 등록 (오프라인 지원) ──
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function(){
+      navigator.serviceWorker.register("./service-worker.js").catch(function(){ /* 등록 실패해도 앱은 정상 동작 */ });
+    });
+  }
 })();
 </script>
 </body>
